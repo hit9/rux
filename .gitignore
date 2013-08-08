@@ -4,3 +4,4 @@
 *.pyo
 venv
 .sass-cache
+test*
