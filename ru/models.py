@@ -87,3 +87,6 @@ class About(object):
     def __init__(self, markdown=None, html=None):
         self.markdown = markdown
         self.html = html
+
+
+about = About()

@@ -83,7 +83,7 @@ class Parser(object):
 
         title, markdown = "\n".join(lines[:l]), "\n".join(lines[l+1:])
         title = title.strip()
-        html = self.markdown.render(html)
+        html = self.markdown.render(markdown)
         summary = self.markdown.render(markdown[:200])
 
         return {
@@ -92,6 +92,10 @@ class Parser(object):
             'html': html,
             'summary': summary,
         }
+
+    def parse_body(self, body):
+        """Parse body(markdown) to html, return html"""
+        return self.markdown.render(body)
 
 
 parser = Parser()  # build a runtime parser
