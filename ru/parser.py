@@ -81,9 +81,17 @@ class Parser(object):
         if not l:
             raise PostTitleNotFound
 
-        title, body = "\n".join(lines[:l]), "\n".join(lines[l+1:])
+        title, markdown = "\n".join(lines[:l]), "\n".join(lines[l+1:])
         title = title.strip()
-        return {'title': title, 'body': body}
+        html = self.markdown.render(html)
+        summary = self.markdown.render(markdown[:200])
+
+        return {
+            'title': title,
+            'markdown': markdown,
+            'html': html,
+            'summary': summary,
+        }
 
 
 parser = Parser()  # build a runtime parser

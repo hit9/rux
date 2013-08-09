@@ -47,5 +47,43 @@ class Post(object):
       title     unicode     post's title
       datetime  datetime    post's created time
       markdown  unicode     post's body source, it's in markdown
-      html      unicode     post's html, parsed from markdown"""
-    pass
+      html      unicode     post's html, parsed from markdown
+      summary   unicode     post's summary"""
+
+    def __init__(self, title=None, datetime=None, markdown=None, html=None,
+                 summary=None):
+        self.title = title
+        self.datetime = datetime
+        self.markdown = markdown
+        self.html = html
+        self.summary = summary
+
+
+class Page(object):
+    """The 1st, 2nd, 3rd page..
+    attributes
+      number    int         the page's order
+      posts     list        lists of post objects
+      first     bool        is the first page?
+      last      bool        is the last page?"""
+
+    def __init__(self, number=1, posts=None, first=False, last=False):
+        self.number = number
+        self.first = first
+        self.last = last
+
+        if posts is None:
+            self.posts = []
+        else:
+            self.posts = posts
+
+
+class About(object):
+    """The blog's about page
+    attributes
+      markdown  unicode     the about page's source content
+      html      unicode     the about page's html"""
+
+    def __init__(self, markdown=None, html=None):
+        self.markdown = markdown
+        self.html = html
