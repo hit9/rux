@@ -2,6 +2,8 @@
 
 """helper functions defined here"""
 
+import os
+
 
 class Color(object):
     """
@@ -39,3 +41,8 @@ class Color(object):
 
 
 colored = Color().colored
+
+
+def join(*p):
+    """return normpath version of path.join"""
+    return os.path.normpath(os.path.join(*p))

@@ -35,7 +35,8 @@ class PostTitleEmpty(ParseException):
 
 
 class PostNameInvalid(ParseException):
-    """Invalid post name, should be datetime, like '1992-04-05-10-10'"""  # my birth
+    """Invalid post name, should be datetime, like '1992-04-05-10-10'"""
+    # my birth
     pass
 
 
