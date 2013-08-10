@@ -2,6 +2,7 @@
 
 """post parser"""
 
+import re
 
 from . import charset
 from .exceptions import *
@@ -54,7 +55,8 @@ class Parser(object):
 
     """
 
-    separator = '---'  # separator between toml header and markdown body
+    # title's matching pattern
+    title_p = re.compile(r'(?P<title>[^\n]+)\n\s*={3,}\s*\n*')
 
     def __init__(self):
         """Initialize the parser, set markdown render handler as
@@ -70,19 +72,10 @@ class Parser(object):
 
     def parse(self, source):
         """Parse unicode post source, return dict"""
-        lines = source.splitlines()
-        l = None  # flag: if there is separator
 
-        for line_no, line in enumerate(lines):
-            if self.separator in line:
-                l = line_no  # got the separator's line number
-                break
+        title, markdown = self.split(source)
 
-        if not l:
-            raise PostTitleNotFound
-
-        title, markdown = "\n".join(lines[:l]), "\n".join(lines[l+1:])
-        title = title.strip()
+        # render to html
         html = self.markdown.render(markdown)
         summary = self.markdown.render(markdown[:200])
 
@@ -93,8 +86,28 @@ class Parser(object):
             'summary': summary,
         }
 
-    def parse_body(self, body):
-        """Parse body(markdown) to html, return html"""
+    def split(self, source):
+        """split title and body from source, return tuple(title, body)"""
+        generator = self.title_p.finditer(source)
+
+        try:  # try to get the first matched result
+            first_matched = generator.next()
+        except StopIteration:
+            # no title found
+            raise PostTitleNotFound
+
+        # get position and title
+        title = first_matched.group('title')
+        end_position = first_matched.end()
+
+        # get body
+        body = source[end_position:]
+
+        return title, body
+
+
+    def parse_markdown(self, markdown):
+        """Parse markdown to html"""
         return self.markdown.render(body)
 
 
