@@ -3,6 +3,7 @@
 """helper functions defined here"""
 
 import os
+import errno
 
 
 class Color(object):

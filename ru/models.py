@@ -84,6 +84,9 @@ class Page(object):
       first     bool        is the first page?
       last      bool        is the last page?"""
 
+    template = "page.html"
+    out_dir = join(out_dir, "page")
+
     def __init__(self, number=1, posts=None, first=False, last=False):
         self.number = number
         self.first = first
@@ -93,6 +96,13 @@ class Page(object):
             self.posts = []
         else:
             self.posts = posts
+
+    @property
+    def out(self):
+        if self.first:
+            return join(out_dir, "index" + out_ext)
+        else:
+            return join(Page.out_dir, str(self.number) + out_ext)
 
 
 class About(object):

@@ -22,11 +22,11 @@ class Config(object):
         'blog': {
             'name': '',
             'description': '',
-            'theme': '',
+            'theme': 'default',
         },
         'author': {
-            'name': '',
-            'email': '',
+            'name': 'hit9',
+            'email': 'nz2324@126.com',
         }
     }
 

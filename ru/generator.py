@@ -36,9 +36,9 @@ class Generator(object):
         """register all blinker signals"""
         signals.initialized.connect(self.parse_posts)
         # signals.initialized.connect(self.render_about_page)
-        # signals.posts_parsed.connect(self.compose_pages)
-        # signals.posts_parsed.connect(self.render_posts)
-        # signals.page_composed.connect(self.render_pages)
+        signals.posts_parsed.connect(self.compose_pages)
+        signals.posts_parsed.connect(self.render_posts)
+        signals.page_composed.connect(self.render_pages)
 
     def step(step_method):
         """decorator to wrap each step method"""
@@ -118,6 +118,49 @@ class Generator(object):
         )
         logger.success("Posts parsed")
         signals.posts_parsed.send(self)
+
+    @step
+    def compose_pages(self, sender):
+        """Compose pages from posts"""
+
+        groups = chunks(self.posts, 10)  #10 posts per page
+
+        for index, group in enumerate(groups):
+            self.pages.append(Page(number=index+1, posts=list(group)))
+
+        if self.pages:  # must not empty
+            self.pages[0].first = True
+            self.pages[-1].last = True
+        logger.success("Pages composed")
+        signals.page_composed.send(self)
+
+    def render_to(self, path, template, **data):
+        """shortcut to render data with template and then write to path.
+        Just add exception catch to renderer.render_to"""
+        try:
+            renderer.render_to(path, template, **data)
+        except JinjaTemplateNotFound as e:
+            logger.error(e.__doc__ + ": Template '%s'" % template)
+            sys.exit(1)  # template not found,  must exit the script
+
+    @step
+    def render_posts(self, sender):
+        """Render all posts to 'post/' with template 'post.html'"""
+        mkdir_p(Post.out_dir)
+
+        for post in self.posts:
+            self.render_to(post.out, Post.template, post=post)
+
+        logger.success("Posts rendered")
+
+    @step
+    def render_pages(self, sender):
+        """Render all pages to 'page/' with template 'page.html'"""
+        mkdir_p(Page.out_dir)
+
+        for page in self.pages:
+            self.render_to(page.out, Page.template, page=page)
+        logger.success("Pages rendered")
 
 
 generator = Generator()
