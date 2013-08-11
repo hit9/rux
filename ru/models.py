@@ -114,6 +114,9 @@ class About(object):
     def __init__(self, markdown=None, html=None):
         self.markdown = markdown
         self.html = html
+        self.src = join(src_dir, "about" + src_ext)
+        self.out = join(out_dir, "about" + out_ext)
+        self.template = "about.html"
 
 
 about = About()
