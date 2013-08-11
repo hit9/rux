@@ -44,3 +44,6 @@ class Config(object):
             raise ConfigSyntaxError
 
         return config
+
+
+config = Config()

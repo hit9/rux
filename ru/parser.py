@@ -2,9 +2,11 @@
 
 """post parser"""
 
+import os
 import re
+from datetime import datetime
 
-from . import charset
+from . import charset, src_ext
 from .exceptions import *
 
 import houdini
@@ -105,10 +107,25 @@ class Parser(object):
 
         return title, body
 
-
     def parse_markdown(self, markdown):
         """Parse markdown to html"""
         return self.markdown.render(body)
+
+    def parse_file(self, file_path):
+        """parse post from file"""
+        name = os.path.basename(file_path)[:-len(src_ext)]
+
+        try:
+            dt = datetime.strptime(name, "%Y-%m-%d-%H-%M")
+        except ValueError:
+            raise PostNameInvalid
+
+        data = self.parse(open(file_path).read().decode(charset))
+
+        data["datetime"] = dt
+        data["name"] = name
+
+        return data
 
 
 parser = Parser()  # build a runtime parser

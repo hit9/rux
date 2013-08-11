@@ -2,6 +2,9 @@
 
 """ru's models"""
 
+from . import src_ext, out_ext, src_dir, out_dir
+from .utils import join
+
 
 class Blog(object):
     """The blog
@@ -44,19 +47,33 @@ author = Author()
 class Post(object):
     """The blog's post object.
     attributes
+      name      unicode     post's filename without extension
       title     unicode     post's title
       datetime  datetime    post's created time
       markdown  unicode     post's body source, it's in markdown
       html      unicode     post's html, parsed from markdown
       summary   unicode     post's summary"""
 
-    def __init__(self, title=None, datetime=None, markdown=None, html=None,
-                 summary=None):
+    src_dir = join(src_dir, "post")
+    out_dir = join(out_dir, "post")
+    template = "post.html"
+
+    def __init__(self, name=None, title=None, datetime=None, markdown=None,
+                 html=None, summary=None):
+        self.name = name
         self.title = title
         self.datetime = datetime
         self.markdown = markdown
         self.html = html
         self.summary = summary
+
+    @property
+    def src(self):
+        return join(Post.src_dir, self.name + src_ext)
+
+    @property
+    def out(self):
+        return join(Post.out_dir, self.name + out_ext)
 
 
 class Page(object):
