@@ -4,8 +4,8 @@ import logging
 from subprocess import call
 
 from . import version
+from .daemon import ru_daemon
 from .logger import logger
-
 from docopt import docopt
 
 """command line interface"""
@@ -39,11 +39,11 @@ def main():
             logger.info("deploy blog")
     elif arguments["server"]:
         if arguments["start"]:
-            logger.info("server start")
+            ru_daemon.start()
         elif arguments["stop"]:
-            logger.info("server down")
+            ru_daemon.stop()
         elif arguments["status"]:
-            logger.info("server status")
+            ru_daemon.status()
     else:
         exit(usage)
 
