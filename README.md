@@ -23,33 +23,43 @@ Usage
 
 1. 建立目录, 部署博客
 
-    mkdir myblog
-    cd myblog
-    ru new blog
+  ```
+  mkdir myblog
+  cd myblog
+  ru new blog
+  ```
 
 2. 配置博客
 
-    vim config.toml
+  ```
+  vim config.toml
+  ```
 
 3. 打开服务
 
-    ru server start
+  ```
+  ru server start
+  ```
 
 4. 新建文章
 
-    ru new post
+  ```
+  ru new post
+  ```
 
 5. 编写文章
 
-    vim src/post/2013-03-27-10-10.md
+  ```
+  vim src/post/2013-03-27-10-10.md
+  ```
 
   每次保存会自动编译, 到浏览器中`http://localhost:8888`预览博客
 
 6. 关闭服务
 
-    ru server stop
-
-    
+  ```
+  ru server stop
+  ```
 
 License
 --------
