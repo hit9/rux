@@ -5,7 +5,7 @@
 from . import charset
 from .exceptions import JinjaTemplateNotFound
 
-from jinja2 import Environment,FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 from jinja2.exceptions import TemplateNotFound
 
 
