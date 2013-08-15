@@ -3,7 +3,7 @@ from ru import version
 
 
 setup(
-    name='ru2',
+    name='ru',
     version=version,
     author='hit9',
     author_email='nz2324@126.com',

@@ -47,9 +47,8 @@ def new_post():
     """touch new post to src/post"""
     logger.info(deploy_blog.__doc__)
     now = datetime.datetime.now()
-    now_s = now.strftime("%Y-%m-%d-%H-%M-%S")
+    now_s = now.strftime("%Y-%m-%d-%H-%M")
     filepath = join(Post.src_dir, now_s + src_ext)
-    call("touch " + filepath)
 
     if not exists(Post.src_dir):
         logger.error(SourceDirectoryNotFound.__doc__)
