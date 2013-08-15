@@ -1,0 +1,2 @@
+- [ ] Add build and server command
+- [ ] add clean task
