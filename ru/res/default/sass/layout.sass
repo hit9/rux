@@ -1,0 +1,110 @@
+@import base
+@import normalize
+@import markdown
+
+/* sticky footer */
+
+*
+  margin: 0
+
+html, body
+  height: 100%
+
+.container
+  min-height: 100%
+  height: auto !important
+  margin: 0 auto -142px
+
+.footer, .footer-push
+  height: 142px
+
+/* sticky footer end */
+
+
+/* fonts */
+@import url(http://fonts.googleapis.com/css?family=Merriweather:400,300)
+@import url(http://fonts.googleapis.com/css?family=OFL+Sorts+Mill+Goudy+TT:regular,italic)
+
+body
+  font: 16px/1.48 'Merriweather',serif
+  background: #fff
+  color: #000
+  font-weight: 300
+
+a
+  text-decoration: none
+
+a:link
+  color: $red
+  text-decoration: none
+
+a:hover
+  color: $red
+  text-decoration: underline
+
+a:visited
+  color: $red
+
+.container
+  width: $width
+
+.header, .content, .footer
+  width: $width
+  margin: 0 auto
+  text-align: center
+
+.content
+  text-align: left
+
+.header
+  padding-top: 60px
+  h1
+    a
+      +ofl-font(35px)
+      font-weight: 300
+  h2
+    +ofl-font(17px)
+    font-style: italic
+    color: #333
+
+  p.nav
+    +ofl-font(21px)
+    margin-top: 25px
+    color: #000
+    font-weight: 300
+    a
+      margin: 0 10px
+
+
+.footer
+  width: $width
+  margin: 0 auto
+  font-size: 14px
+  color: #333
+  font-weight: 200
+  padding-top: 50px
+
+
+.separator
+  width: 100%
+  border-bottom: 1px dotted $red
+  text-align: center
+  height: 18px
+  margin-bottom: 15px
+
+.separator span
+  line-height: 20px
+  padding: 0 20px
+  background: white
+  display: inline-block
+  margin-top: 10px
+
+.flourish
+  text-align: center
+  margin: 60px 0
+
+.cut
+  color: #aaa
+  text-align: center
+  letter-spacing: 3px
+  margin: 15px 0

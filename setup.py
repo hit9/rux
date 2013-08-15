@@ -3,7 +3,7 @@ from ru import version
 
 
 setup(
-    name='ru',
+    name='ru2',
     version=version,
     author='hit9',
     author_email='nz2324@126.com',
@@ -16,7 +16,7 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'ru = ru.cli:main'
+            'ru=ru.cli:main'
         ]
     },
     install_requires=open("requirements.txt").read().splitlines(),

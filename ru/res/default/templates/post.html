@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block css_this_page %}post.css{% endblock %}
+{% block title %}{{post.title}}{% endblock %}
+{% block content %}
+  <h1 class="title">{{post.title}}</h1>
+  <div class="post-html">
+    {{post.html}}
+  </div>
+  <p class="date">written on {{post.datetime.strftime("%b  %d, %y")}} </p>
+{% endblock %}

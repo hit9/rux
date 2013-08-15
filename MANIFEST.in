@@ -1,0 +1,9 @@
+include LICENSE-BSD README.md requirements.txt
+recursive-include ru/res *
+recursive-exclude ru .*.swp
+recursive-exclude ru .*.swo
+recursive-exclude venv *
+recursive-exclude dist *
+recursive-exclude build *
+recursive-exclude ru.egg-info *
+recursive-exclude ru/res/default/.sass-cache *

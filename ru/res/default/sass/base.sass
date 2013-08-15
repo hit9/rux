@@ -1,0 +1,21 @@
+@charset "utf-8"
+
+$red: #CC0033
+$gray: #777
+
+$width: 600px
+
+=border-radius($r: 4px)
+  -webkit-border-radius: $r
+  -moz-border-radius: $r
+  -ms-border-radius: $r
+  -o-border-radius: $r
+  border-radius: $r
+
+=ofl-font($font-size: 17px)
+  font: $font-size 'OFL Sorts Mill Goudy', 'OFL Sorts Mill Goudy TT', serif
+  font-weight: 200
+
+=bigtitle
+  +ofl-font(32px)
+  text-align: center
