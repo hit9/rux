@@ -7,7 +7,7 @@
 
 """global vars"""
 
-version = "0.0.3"
+version = "0.1.0"
 charset = "utf8"
 src_ext = ".md"
 out_ext = ".html"

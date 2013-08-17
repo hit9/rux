@@ -3,6 +3,8 @@ Ru
 
 Dirty, Dirty, Dirty site generator.
 
+latest version: v0.1.0
+
 About
 ------
 
