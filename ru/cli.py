@@ -59,7 +59,10 @@ def new_post():
         logger.error(SourceDirectoryNotFound.__doc__)
         sys.exit(1)
 
-    open(filepath, "a").close()
+    content = """Title\n=====\nMarkdown content..."""
+    f = open(filepath, "w")
+    f.write(content)
+    f.close()
 
     logger.success("new post created: %s" % filepath)
 

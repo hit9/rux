@@ -123,7 +123,7 @@ class Generator(object):
     def compose_pages(self, sender):
         """Compose pages from posts"""
 
-        groups = chunks(self.posts, 10)  # 10 posts per page
+        groups = chunks(self.posts, 9)  # 9 posts per page
 
         for index, group in enumerate(groups):
             self.pages.append(Page(number=index+1, posts=list(group)))
