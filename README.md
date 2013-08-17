@@ -18,15 +18,15 @@ Installation
 
     pip install git+git://github.com/hit9/ru.git
 
-Usage
------
+Get Started
+-----------
 
 1. 建立目录, 部署博客
 
   ```
   mkdir myblog
   cd myblog
-  ru new blog
+  ru deploy
   ```
 
 2. 配置博客
@@ -38,13 +38,13 @@ Usage
 3. 打开服务
 
   ```
-  ru server start
+  ru start
   ```
 
 4. 新建文章
 
   ```
-  ru new post
+  ru post
   ```
 
 5. 编写文章
@@ -58,8 +58,33 @@ Usage
 6. 关闭服务
 
   ```
-  ru server stop
+  ru stop
   ```
+
+Usage
+------
+
+```
+Usage:
+  ru [-h|-v]
+  ru post
+  ru (deploy|build|clean|serve)
+  ru (start|stop|status)
+
+Options:
+  -h --help         show help
+  -v --version      show version
+
+Commands:
+  post              begin a new post
+  deploy            deploy new blog in this directory
+  build             build blog
+  server            start server listen at 0.0.0.0:8888
+  clean             clean built htmls
+  start             start builder server
+  stop              stop builder server
+  status            get builder server's status
+```
 
 License
 --------
