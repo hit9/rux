@@ -50,7 +50,7 @@ def deploy_blog():
 
 def new_post():
     """touch new post to src/post"""
-    logger.info(deploy_blog.__doc__)
+    logger.info(new_post.__doc__)
     now = datetime.datetime.now()
     now_s = now.strftime("%Y-%m-%d-%H-%M")
     filepath = join(Post.src_dir, now_s + src_ext)
