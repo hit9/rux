@@ -4,3 +4,4 @@
 - [ ] full readme
 - [ ] rm about page, add author information to layout footer
 - [ ] add port option to ru
+- [ ] default theme moved to submodule
