@@ -6,7 +6,7 @@ from .config import config
 from .exceptions import SourceDirectoryNotFound
 from .generator import generator
 from .logger import logger
-from .models import Post, about
+from .models import Post
 from .utils import join
 
 import sys
@@ -82,9 +82,6 @@ class Server(object):
         for fn in ls(Post.src_dir):
             if fn.endswith(src_ext):
                 paths.append(join(Post.src_dir, fn))
-        # about
-        if exists(about.src):
-            paths.append(about.src)
 
         # config.toml
         if exists(config.filepath):

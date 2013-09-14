@@ -70,12 +70,11 @@ def new_post():
 
 
 def clean():
-    """clean: rm post/ page/ about.html index.html"""
+    """clean: rm post/ page/ index.html"""
     logger.info(clean.__doc__)
     paths = [
         "post",
         "page",
-        "about.html",
         "index.html",
     ]
 

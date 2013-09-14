@@ -2,3 +2,5 @@
 - [x] add clean task
 - [x] update readme, add usage and update quickstart
 - [ ] full readme
+- [ ] rm about page, add author information to layout footer
+- [ ] add port option to ru

@@ -17,6 +17,7 @@ class Config(object):
 
     filename = "config.toml"
     filepath = join(".", filename)
+
     # default configuration
     default = {
         'blog': {

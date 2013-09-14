@@ -7,11 +7,11 @@ from os import listdir as ls
 from os.path import exists
 import sys
 
-from . import src_ext, charset
+from . import src_ext
 from .config import config
 from .exceptions import *
 from .logger import logger
-from .models import blog, author, Post, Page, about
+from .models import blog, author, Post, Page
 from .parser import parser
 from .renderer import renderer
 import signals
@@ -27,7 +27,6 @@ class Generator(object):
     def reset(self):
         self.posts = []
         self.pages = []
-        self.about = about
         self.config = config.default
         self.blog = blog
         self.author = author
@@ -35,7 +34,6 @@ class Generator(object):
     def register_signals(self):
         """register all blinker signals"""
         signals.initialized.connect(self.parse_posts)
-        signals.initialized.connect(self.render_about_page)
         signals.posts_parsed.connect(self.compose_pages)
         signals.posts_parsed.connect(self.render_posts)
         signals.page_composed.connect(self.render_pages)
@@ -161,19 +159,6 @@ class Generator(object):
         for page in self.pages:
             self.render_to(page.out, Page.template, page=page)
         logger.success("Pages rendered")
-
-    @step
-    def render_about_page(self, sender):
-        """Render about me page to 'about.html' with template 'about.html'"""
-
-        if exists(self.about.src):
-            content = open(self.about.src).read().decode(charset)
-        else:
-            content = ""
-
-        self.about.html = parser.markdown.render(content)
-        self.render_to(self.about.out, self.about.template, about=self.about)
-        logger.success("About page rendered")
 
 
 generator = Generator()

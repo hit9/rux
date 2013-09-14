@@ -13,7 +13,7 @@ class Blog(object):
       description   unicode     blog's description
       theme         str         blog's theme"""
 
-    def __init__(self, name=None, description=None, theme=None):
+    def __init__(self, name="", description="", theme=""):
         self.name = name
         self.description = description
         self.theme = theme
@@ -27,18 +27,11 @@ class Author(object):
     attributes
       name      unicode     author's name
       email     unicode     author's email
-      gravatar  str         author's gravatar id
-    the gravatar is a property decorated method. gravatar id
-    got from email."""
+    """
 
-    def __init__(self, name=None, email=None):
+    def __init__(self, name="", email=""):
         self.name = name
         self.email = email
-
-    @property
-    def gravatar(self):
-        from hashlib import md5
-        return md5(self.email).hexdigest()
 
 
 author = Author()
@@ -54,12 +47,12 @@ class Post(object):
       html      unicode     post's html, parsed from markdown
       summary   unicode     post's summary"""
 
-    src_dir = join(src_dir, "post")
+    src_dir = src_dir
     out_dir = join(out_dir, "post")
     template = "post.html"
 
-    def __init__(self, name=None, title=None, datetime=None, markdown=None,
-                 html=None, summary=None):
+    def __init__(self, name="", title="", datetime=None, markdown="",
+                 html="", summary=""):
         self.name = name
         self.title = title
         self.datetime = datetime
@@ -103,20 +96,3 @@ class Page(object):
             return join(out_dir, "index" + out_ext)
         else:
             return join(Page.out_dir, str(self.number) + out_ext)
-
-
-class About(object):
-    """The blog's about page
-    attributes
-      markdown  unicode     the about page's source content
-      html      unicode     the about page's html"""
-
-    def __init__(self, markdown=None, html=None):
-        self.markdown = markdown
-        self.html = html
-        self.src = join(src_dir, "about" + src_ext)
-        self.out = join(out_dir, "about" + out_ext)
-        self.template = "about.html"
-
-
-about = About()
