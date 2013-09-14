@@ -2,10 +2,10 @@
 
 """the core builder"""
 
-import sys
+from datetime import datetime
 from os import listdir as ls
 from os.path import exists
-from datetime import datetime
+import sys
 
 from . import src_ext, charset
 from .config import config

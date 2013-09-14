@@ -2,9 +2,9 @@
 
 """post parser"""
 
+from datetime import datetime
 import os
 import re
-from datetime import datetime
 
 from . import charset, src_ext
 from .exceptions import *

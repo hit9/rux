@@ -1,4 +1,4 @@
 - [x] Add build and server command
 - [x] add clean task
 - [x] update readme, add usage and update quickstart
-- [ ] Add port option to server
+- [ ] full readme

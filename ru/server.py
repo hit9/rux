@@ -60,7 +60,9 @@ class Server(object):
             logger.error(str(e))
             sys.exit(1)
 
-        logger.info("Serve at http://0.0.0.0:%d (ctrl-c to stop it) ..." % port)
+        logger.info(
+            "Serve at http://0.0.0.0:%d (ctrl-c to stop it) ..." % port
+        )
 
         try:
             self.server.serve_forever()
@@ -105,7 +107,6 @@ class Server(object):
                 except SystemExit:
                     logger.error("Error occurred, server shut down")
                     self.shutdown_server()
-
 
                 if self.files_stat != files_stat:
                     logger.info("Changes detected, start rebuilding..")

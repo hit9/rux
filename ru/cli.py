@@ -10,10 +10,12 @@ from .daemon import ru_daemon
 from .exceptions import SourceDirectoryNotFound
 from .generator import generator
 from .logger import logger
-from models import Post, src_ext
+from .models import Post, src_ext
 from .server import server
 from .utils import join
+
 from docopt import docopt
+
 
 """command line interface"""
 
@@ -80,6 +82,7 @@ def clean():
     cmd = ["rm", "-rf"] + paths
     call(cmd)
     logger.success("clean done")
+
 
 def main():
     arguments = docopt(usage, version=version)

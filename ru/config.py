@@ -2,11 +2,11 @@
 
 """configuration manager, ru's configuration is in toml"""
 
+from os.path import exists
+
 from . import charset
 from .exceptions import ConfigSyntaxError
 from .utils import join
-
-from os.path import exists
 
 import toml
 

@@ -2,11 +2,11 @@
 
 """ru's logger"""
 
+from datetime import datetime
 import logging
 from logging import Formatter
 from logging import getLogger
 from logging import StreamHandler
-from datetime import datetime
 import sys
 
 from utils import colored
