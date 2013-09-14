@@ -2,6 +2,6 @@
 - [x] add clean task
 - [x] update readme, add usage and update quickstart
 - [ ] full readme
-- [ ] rm about page, add author information to layout footer
+- [x] rm about page, add author information to layout footer
 - [ ] add port option to ru
-- [ ] default theme moved to submodule
+- [x] default theme moved to submodule
