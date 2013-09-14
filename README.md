@@ -15,7 +15,21 @@ Ru
 安装
 ----
 
+推荐使用virtualenv来安装:
+
+    mkdir myblog
+    cd myblog
+    virtualenv venv
+    . venv/bin/activate
     pip install git+git://github.com/hit9/ru.git
+
+
+站点示例
+--------
+
+url: love.hit9.org
+
+files: github.com/hit9/v.git
 
 快速上手
 --------
@@ -23,7 +37,6 @@ Ru
 1. 建立目录, 部署博客
 
   ```
-  mkdir myblog
   cd myblog
   ru deploy
   ```
@@ -60,8 +73,9 @@ Ru
   ru stop
   ```
 
-Usage
-------
+
+使用说明
+--------
 
 ```
 Usage:
@@ -85,7 +99,7 @@ Commands:
   status            get builder server's status
 ```
 
-License
---------
+协议
+----
 
 BSD
