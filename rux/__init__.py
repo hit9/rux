@@ -25,5 +25,5 @@ __version__ = '0.3.0'
 charset = 'utf8'  # utf8 input & output
 src_ext = '.md'
 out_ext = '.html'
-src_dir = '.src'
+src_dir = 'src'
 out_dir = '.'

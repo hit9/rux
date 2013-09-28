@@ -2,6 +2,7 @@
 
 """
     rux.config
+    ~~~~~~~~~~
 
     Configuration manager, rux's configuration is in toml.
 """
