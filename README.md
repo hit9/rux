@@ -21,6 +21,17 @@ Sample site
 
 - files: [github.com/hit9/v.git](https://github.com/hit9/v.git)
 
+Features
+--------
+
+- Source in markdown 
+- No tags, No categories
+- No comment system(disqus, duoshuo..)
+- Minimal configuration
+- Running in the background as a daemon
+
+`rux` is designed **only for writing**.
+
 Installation
 ------------
 
@@ -67,7 +78,7 @@ Quick start
   rux post
   ```
 
-5. write this post
+5. write this post in markdown
 
   ```
   vim src/post/2013-03-27-10-10.md
@@ -80,6 +91,18 @@ Quick start
   ```
   rux stop
   ```
+
+Sample Post
+-----------
+
+A post is make up of title and body, split by `===`:
+
+```
+Title
+=====
+
+Markdown body..
+```
 
 Common Issues
 --------------
