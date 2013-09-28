@@ -1,6 +1,3 @@
-[submodule "ru/res/default"]
-	path = rux/res/default
-	url = git://github.com/hit9/ru-theme-default.git
 [submodule "rux/res/default"]
 	path = rux/res/default
-	url = git://github.com/hit9/ru-theme-default.git
+	url = git://github.com/hit9/rux-theme-default.git
