@@ -1,12 +1,18 @@
 # coding=utf8
+"""
+    rux.cli
+    ~~~~~~~
+
+    rux's commandline interface and simple tasks.
+"""
 
 import datetime
 import logging
 from os.path import dirname, exists
 from subprocess import call
 
-from . import version
-from .daemon import ru_daemon
+from . import __version__
+from .daemon import rux_daemon
 from .exceptions import SourceDirectoryNotFound
 from .generator import generator
 from .logger import logger
@@ -17,42 +23,41 @@ from .utils import join
 from docopt import docopt
 
 
-"""command line interface"""
-
 usage = """Usage:
-  ru [-h|-v]
-  ru post
-  ru (deploy|build|clean|serve)
-  ru (start|stop|status)
+  rux [-h|-v]
+  rux post
+  rux (deploy|build|clean|serve)
+  rux (start|stop|status)
 
 Options:
   -h --help         show help
   -v --version      show version
 
 Commands:
-  post              begin a new post
-  deploy            deploy new blog in this directory
-  build             build blog
-  server            start server listen at 0.0.0.0:8888
+  post              create an empty new post
+  deploy            deploy new blog in current directory
+  build             build source files to html
+  server            start http server at 0.0.0.0:8888
   clean             clean built htmls
   start             start builder server
   stop              stop builder server
-  status            get builder server's status"""
+  status            report builder server's status"""
 
 
 def deploy_blog():
     """deploy blog to current directory"""
     logger.info(deploy_blog.__doc__)
-    lib_dir = dirname(__file__)  # this library's directory
-    res = join(lib_dir, "res")
-    call("rsync -aqu " + join(res, "*") + " .", shell=True)
-    logger.success("deploy done")
-    logger.info("Please edit config.toml to meet tour needs")
+    # rsync -aqu path/to/res/* .
+    call('rsync -aqu ' + join(dirname(__file__), 'res', '*') + ' .', shell=True)
+    logger.success('deploy done')
+    logger.info('Please edit config.toml to meet your needs')
 
 
 def new_post():
-    """touch new post to src/post"""
+    """touch an empty new post to src/"""
     logger.info(new_post.__doc__)
+
+    # file is named as formatted time
     now = datetime.datetime.now()
     now_s = now.strftime("%Y-%m-%d-%H-%M")
     filepath = join(Post.src_dir, now_s + src_ext)
@@ -61,6 +66,7 @@ def new_post():
         logger.error(SourceDirectoryNotFound.__doc__)
         sys.exit(1)
 
+    # write sample content to new file
     content = """Title\n=====\nMarkdown content..."""
     f = open(filepath, "w")
     f.write(content)
@@ -70,8 +76,9 @@ def new_post():
 
 
 def clean():
-    """clean: rm post/ page/ index.html"""
+    """clean: rm -rf post page index.html"""
     logger.info(clean.__doc__)
+
     paths = [
         "post",
         "page",
@@ -84,7 +91,7 @@ def clean():
 
 
 def main():
-    arguments = docopt(usage, version=version)
+    arguments = docopt(usage, version=__version__)
 
     logger.setLevel(logging.INFO)
 
@@ -99,11 +106,11 @@ def main():
     elif arguments["clean"]:
         clean()
     elif arguments["start"]:
-        ru_daemon.start()
+        rux_daemon.start()
     elif arguments["stop"]:
-        ru_daemon.stop()
+        rux_daemon.stop()
     elif arguments["status"]:
-        ru_daemon.status()
+        rux_daemon.status()
     else:
         exit(usage)
 

@@ -1,28 +1,13 @@
 # coding=utf8
 
-"""the builder daemon"""
+"""
+    rux.daemon
+    ~~~~~~~~~~
 
+    rux's http server and wacher daemon, it runs rux in the background. This
+    daemon is modified from <david@boxedice.com>'s generic daemon class.
+"""
 
-#     ***
-#     Modified generic daemon class
-#     ***
-
-#     Author:     http://www.jejik.com/articles/2007/02/a_simple_unix_linux_daemon_in_python/
-#                 www.boxedice.com
-
-#     License:    http://creativecommons.org/licenses/by-sa/3.0/
-
-#     Changes:    23rd Jan 2009 (David Mytton <david@boxedice.com>)
-#                 - Replaced hard coded '/dev/null in __init__ with os.devnull
-#                 - Added OS check to conditionally remove code that doesn't work on OS X
-#                 - Added output to console on completion
-#                 - Tidied up formatting
-#                 11th Mar 2009 (David Mytton <david@boxedice.com>)
-#                 - Fixed problem with daemon exiting on Python 2.4 (before SystemExit was part of the Exception base)
-#                 13th Aug 2010 (David Mytton <david@boxedice.com>
-#                 - Fixed unhandled exception if PID file is empty
-
-# Core modules
 import atexit
 import logging
 import os
@@ -217,7 +202,7 @@ class Daemon(object):
         """
 
 
-class RuDaemon(Daemon):
+class RuxDaemon(Daemon):
 
     def run(self):
         logger.setLevel(logging.ERROR)
@@ -225,4 +210,4 @@ class RuDaemon(Daemon):
         logger.setLevel(logging.INFO)
 
 
-ru_daemon = RuDaemon("/tmp/ru-daemon.pid", stdout="/dev/stdout")
+rux_daemon = RuxDaemon("/tmp/rux-daemon.pid", stdout="/dev/stdout")

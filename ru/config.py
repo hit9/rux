@@ -1,6 +1,10 @@
 # coding=utf8
 
-"""configuration manager, ru's configuration is in toml"""
+"""
+    rux.config
+
+    Configuration manager, rux's configuration is in toml.
+"""
 
 from os.path import exists
 
@@ -13,10 +17,8 @@ import toml
 
 class Config(object):
 
-    """configuration manager"""
-
-    filename = "config.toml"
-    filepath = join(".", filename)
+    filename = 'config.toml'
+    filepath = join('.', filename)
 
     # default configuration
     default = {

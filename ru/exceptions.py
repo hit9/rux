@@ -1,25 +1,30 @@
 # coding=utf8
 
-"""all possible exceptions"""
+"""
+    rux.exceptions
+    ~~~~~~~~~~~~~~
+
+    All possible exceptions.
+"""
 
 
-class RuException(Exception):
+class RuxException(Exception):
     """There was an ambiguous exception that occurred while handling
-    ru's process"""
+    rux's process"""
     pass
 
 
-class SourceDirectoryNotFound(RuException):
+class SourceDirectoryNotFound(RuxException):
     """Source directory was not found"""
     pass
 
 
-class ParseException(RuException):
+class ParseException(RuxException):
     """There was an exception while parsing the source"""
     pass
 
 
-class RenderException(RuException):
+class RenderException(RuxException):
     """There was an exception while rendering to html"""
     pass
 
@@ -31,15 +36,15 @@ class PostTitleNotFound(ParseException):
 
 class PostNameInvalid(ParseException):
     """Invalid post name, should be datetime, like '1992-04-05-10-10'"""
-    # my birth
+    # 1992-04-05 is my birthday! :)
     pass
 
 
-class ConfigSyntaxError(RuException):
+class ConfigSyntaxError(RuxException):
     """Toml syntax error occurred in config.toml"""
     pass
 
 
-class JinjaTemplateNotFound(RuException):
+class JinjaTemplateNotFound(RuxException):
     """Jinja2 template was not found"""
     pass
