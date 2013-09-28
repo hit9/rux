@@ -1,11 +1,13 @@
 Rux
 ===
 
+```
      _/_/_/
     _/    _/  _/    _/  _/    _/
    _/_/_/    _/    _/    _/_/
   _/    _/  _/    _/  _/    _/
  _/    _/    _/_/_/  _/    _/
+```
 
 
 A simple, micro and lightweight static site generator, built for mini needs personal blog.
