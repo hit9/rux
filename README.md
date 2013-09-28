@@ -17,19 +17,27 @@ latest version: v0.3.0
 Sample site
 -----------
 
-site: [love.hit9.org](http://love.hit9.org)
+- site: [love.hit9.org](http://love.hit9.org)
 
-files: [github.com/hit9/v.git](https://github.com/hit9/v.git)
+- files: [github.com/hit9/v.git](https://github.com/hit9/v.git)
 
 Installation
 ------------
 
-Install rux using [virtualenv](http://www.virtualenv.org/):
+- Install rux using [virtualenv](http://www.virtualenv.org/):
 
-    mkdir myblog && cd myblog
-    virtualenv venv
-    . venv/bin/activate
-    pip install git+git://github.com/hit9/rux.git
+  ```
+  mkdir myblog && cd myblog
+  virtualenv venv
+  . venv/bin/activate
+  pip install git+git://github.com/hit9/rux.git
+  ```
+
+- System-Wide Installation
+
+  ```
+  sudo pip install git+git://github.com/hit9/rux.git
+  ```
 
 Quick start
 -----------
