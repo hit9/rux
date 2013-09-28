@@ -1,105 +1,77 @@
 Rux
 ===
 
-极简静态博客生成工具
-
-最新版本: v0.3.0
-
-关于
-----
-
-`rux`是我另一个项目`lilac`的精简版，只有写文章的功能，没有标签，没有rss等等.. 最初用于写爱情日记设计的，
-所以名字起的我女友的名字“铷”。
+     _/_/_/
+    _/    _/  _/    _/  _/    _/
+   _/_/_/    _/    _/    _/_/
+  _/    _/  _/    _/  _/    _/
+ _/    _/    _/_/_/  _/    _/
 
 
-安装
-----
+A simple, micro and lightweight static site generator, built for mini needs personal blog.
 
-推荐使用virtualenv来安装:
+latest version: v0.3.0
 
-    mkdir myblog
-    cd myblog
+Sample site
+-----------
+
+site: [love.hit9.org](http://love.hit9.org)
+
+files: [github.com/hit9/v.git](https://github.com/hit9/v.git)
+
+Installation
+------------
+
+Install rux using [virtualenv](http://www.virtualenv.org/):
+
+    mkdir myblog && cd myblog
     virtualenv venv
     . venv/bin/activate
     pip install git+git://github.com/hit9/rux.git
 
+Quick start
+-----------
 
-站点示例
---------
-
-url: love.hit9.org
-
-files: github.com/hit9/v.git
-
-快速上手
---------
-
-1. 建立目录, 部署博客
+1. deploy a new blog
 
   ```
   cd myblog
   rux deploy
   ```
 
-2. 编辑博客配置, 指明博客名字和介绍
+2. edit the configuration, the config file is simple.
 
   ```
   vim config.toml
   ```
 
-3. 打开服务, `rux`会自动监视文件改动并编译
+3. start rux's server(include a web server and a file watcher)
 
   ```
   rux start
   ```
 
-4. 新建一个文章，会返回新建文章的位置
+4. new a post
 
   ```
   rux post
   ```
 
-5. 编写刚刚新建的文章
+5. write this post
 
   ```
   vim src/post/2013-03-27-10-10.md
   ```
 
-  每次保存会自动编译, 到浏览器中`http://localhost:8888`预览博客
+  `rux` will automatically build blog each time you save.
 
-6. 关闭服务
+6. stop the server
 
   ```
   rux stop
   ```
 
-
-使用说明
---------
-
-```
-Usage:
-  rux [-h|-v]
-  rux post
-  rux (deploy|build|clean|serve)
-  rux (start|stop|status)
-
-Options:
-  -h --help         show help
-  -v --version      show version
-
-Commands:
-  post              begin a new post
-  deploy            deploy new blog in this directory
-  build             build blog
-  server            start server listen at 0.0.0.0:8888
-  clean             clean built htmls
-  start             start builder server
-  stop              stop builder server
-  status            get builder server's status
-```
-
-协议
-----
+License
+-------
 
 BSD
