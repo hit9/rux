@@ -1,9 +1,13 @@
 # coding=utf8
 
-"""All blinker signals in building process, actually this
-enable as to make our plugins. And `ru` use it in build-in
-building process"""
+"""
+    rux.signals
+    ~~~~~~~~~~~
 
+    All blinker signals in building process, actually this enable as to
+    make our plugins. And `rux` use it in build-in building process.
+
+"""
 
 from blinker import signal
 

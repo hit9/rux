@@ -1,14 +1,14 @@
-Ru
-==
+Rux
+===
 
 极简静态博客生成工具
 
-最新版本: v0.2.1
+最新版本: v0.3.0
 
 关于
 ----
 
-`ru`是我另一个项目`lilac`的精简版，只有写文章的功能，没有标签，没有rss等等.. 最初用于写爱情日记设计的，
+`rux`是我另一个项目`lilac`的精简版，只有写文章的功能，没有标签，没有rss等等.. 最初用于写爱情日记设计的，
 所以名字起的我女友的名字“铷”。
 
 
@@ -21,7 +21,7 @@ Ru
     cd myblog
     virtualenv venv
     . venv/bin/activate
-    pip install git+git://github.com/hit9/ru.git
+    pip install git+git://github.com/hit9/rux.git
 
 
 站点示例
@@ -38,7 +38,7 @@ files: github.com/hit9/v.git
 
   ```
   cd myblog
-  ru deploy
+  rux deploy
   ```
 
 2. 编辑博客配置, 指明博客名字和介绍
@@ -47,16 +47,16 @@ files: github.com/hit9/v.git
   vim config.toml
   ```
 
-3. 打开服务, `ru`会自动监视文件改动并编译
+3. 打开服务, `rux`会自动监视文件改动并编译
 
   ```
-  ru start
+  rux start
   ```
 
 4. 新建一个文章，会返回新建文章的位置
 
   ```
-  ru post
+  rux post
   ```
 
 5. 编写刚刚新建的文章
@@ -70,7 +70,7 @@ files: github.com/hit9/v.git
 6. 关闭服务
 
   ```
-  ru stop
+  rux stop
   ```
 
 
@@ -79,10 +79,10 @@ files: github.com/hit9/v.git
 
 ```
 Usage:
-  ru [-h|-v]
-  ru post
-  ru (deploy|build|clean|serve)
-  ru (start|stop|status)
+  rux [-h|-v]
+  rux post
+  rux (deploy|build|clean|serve)
+  rux (start|stop|status)
 
 Options:
   -h --help         show help

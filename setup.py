@@ -1,9 +1,9 @@
 from setuptools import setup
-from ru import __version__
+from rux import __version__
 
 
 setup(
-    name='ru',
+    name='rux',
     version=__version__,
     author='hit9',
     author_email='nz2324@126.com',
@@ -11,13 +11,13 @@ setup(
     built for mini needs personal blog.''',
     license='BSD',
     keywords='static blog generator, markdown, html',
-    url='http://github.com/hit9/ru',
-    packages=['ru'],
+    url='http://github.com/hit9/rux',
+    packages=['rux'],
     include_package_data=True,
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'ru=ru.cli:main'
+            'rux=rux.cli:main'
         ]
     },
     install_requires=open("requirements.txt").read().splitlines(),
