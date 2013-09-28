@@ -1,105 +1,119 @@
-Ru
-==
+Rux
+===
 
-极简静态博客生成工具
-
-最新版本: v0.2.1
-
-关于
-----
-
-`ru`是我另一个项目`lilac`的精简版，只有写文章的功能，没有标签，没有rss等等.. 最初用于写爱情日记设计的，
-所以名字起的我女友的名字“铷”。
+```
+     _/_/_/
+    _/    _/  _/    _/  _/    _/
+   _/_/_/    _/    _/    _/_/
+  _/    _/  _/    _/  _/    _/
+ _/    _/    _/_/_/  _/    _/
+```
 
 
-安装
-----
+A simple, micro and lightweight static site generator, built for mini needs personal blog.
 
-推荐使用virtualenv来安装:
+latest version: v0.3.0
 
-    mkdir myblog
-    cd myblog
-    virtualenv venv
-    . venv/bin/activate
-    pip install git+git://github.com/hit9/ru.git
+Sample site
+-----------
 
+- site: [love.hit9.org](http://love.hit9.org)
 
-站点示例
+- files: [github.com/hit9/v.git](https://github.com/hit9/v.git)
+
+Features
 --------
 
-url: love.hit9.org
+- Source in markdown 
+- No tags, No categories
+- No comment system(disqus, duoshuo..)
+- Minimal configuration
+- Running in the background as a daemon
 
-files: github.com/hit9/v.git
+`rux` is designed **only for writing**.
 
-快速上手
---------
+Installation
+------------
 
-1. 建立目录, 部署博客
+- Install rux using [virtualenv](http://www.virtualenv.org/):
+
+  ```
+  mkdir myblog && cd myblog
+  virtualenv venv
+  . venv/bin/activate
+  pip install git+git://github.com/hit9/rux.git
+  ```
+
+- System-Wide Installation
+
+  ```
+  sudo pip install git+git://github.com/hit9/rux.git
+  ```
+
+Quick start
+-----------
+
+1. deploy a new blog
 
   ```
   cd myblog
-  ru deploy
+  rux deploy
   ```
 
-2. 编辑博客配置, 指明博客名字和介绍
+2. edit the configuration, the config file is simple.
 
   ```
   vim config.toml
   ```
 
-3. 打开服务, `ru`会自动监视文件改动并编译
+3. start rux's server(include a web server and a file watcher)
 
   ```
-  ru start
+  rux start
   ```
 
-4. 新建一个文章，会返回新建文章的位置
+4. new a post
 
   ```
-  ru post
+  rux post
   ```
 
-5. 编写刚刚新建的文章
+5. write this post in markdown
 
   ```
   vim src/post/2013-03-27-10-10.md
   ```
 
-  每次保存会自动编译, 到浏览器中`http://localhost:8888`预览博客
+  `rux` will automatically build blog each time you save.
 
-6. 关闭服务
+6. stop the server
 
   ```
-  ru stop
+  rux stop
   ```
 
+Sample Post
+-----------
 
-使用说明
---------
+A post is make up of title and body, split by `===`:
 
 ```
-Usage:
-  ru [-h|-v]
-  ru post
-  ru (deploy|build|clean|serve)
-  ru (start|stop|status)
+Title
+=====
 
-Options:
-  -h --help         show help
-  -v --version      show version
-
-Commands:
-  post              begin a new post
-  deploy            deploy new blog in this directory
-  build             build blog
-  server            start server listen at 0.0.0.0:8888
-  clean             clean built htmls
-  start             start builder server
-  stop              stop builder server
-  status            get builder server's status
+Markdown body..
 ```
 
-协议
-----
+Common Issues
+--------------
+
+1. Installation troubles on Ubuntu: cann't find Python.h, solution:
+
+  ```
+  sudo apt-get install python-dev
+  ```
+
+License
+-------
 
 BSD

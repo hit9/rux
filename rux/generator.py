@@ -1,6 +1,11 @@
 # coding=utf8
 
-"""the core builder"""
+"""
+    rux.generator
+    ~~~~~~~~~~~~~
+
+    The core builder processor.
+"""
 
 from datetime import datetime
 from os import listdir as ls
@@ -25,6 +30,7 @@ class Generator(object):
         self.register_signals()
 
     def reset(self):
+        """reset resources objects to empty"""
         self.posts = []
         self.pages = []
         self.config = config.default
@@ -39,7 +45,8 @@ class Generator(object):
         signals.page_composed.connect(self.render_pages)
 
     def step(step_method):
-        """decorator to wrap each step method"""
+        """decorator to wrap each step method, each step will
+        logging its doc to stdout"""
         def wrapper(self, *args, **kwargs):
             logger.info(step_method.__doc__)
             return step_method(self, *args, **kwargs)
@@ -47,7 +54,7 @@ class Generator(object):
 
     @step
     def initialize(self):
-        """Initialize config, blog, author and jinja2 environment"""
+        """Initialize configuration and renderer environment"""
 
         # read config to update the default
         try:
@@ -62,9 +69,7 @@ class Generator(object):
         self.blog.__dict__.update(self.config['blog'])
         self.author.__dict__.update(self.config['author'])
 
-        #
         # -------- initialize jinja2 --
-        #
 
         # get templates directory
         templates = join(self.blog.theme, "templates")
@@ -75,6 +80,7 @@ class Generator(object):
             config=self.config,
         )
         renderer.initialize(templates, jinja_global_data)
+
         logger.success("Generator initialized")
         # send signal that generator was already initialized
         signals.initialized.send(self)
@@ -88,7 +94,7 @@ class Generator(object):
 
     @step
     def parse_posts(self, sender):
-        """Parse posts and sort them by create time"""
+        """Parse and sort posts"""
 
         if not exists(Post.src_dir):
             logger.error(SourceDirectoryNotFound.__doc__)
@@ -109,9 +115,9 @@ class Generator(object):
             else:
                 self.posts.append(Post(**data))
 
-        # sort posts by its create time
+        # sort posts by its create time, from new to old
         self.posts.sort(
-            key=lambda post: post.datetime.timetuple(),  # from now to past
+            key=lambda post: post.datetime.timetuple(),
             reverse=True
         )
         logger.success("Posts parsed")
@@ -121,14 +127,15 @@ class Generator(object):
     def compose_pages(self, sender):
         """Compose pages from posts"""
 
-        groups = chunks(self.posts, 9)  # 9 posts per page
+        groups = chunks(self.posts, 9)  # 9 posts each page
 
         for index, group in enumerate(groups):
             self.pages.append(Page(number=index+1, posts=list(group)))
 
-        if self.pages:  # must not empty
+        if self.pages:  # !Not empty
             self.pages[0].first = True
             self.pages[-1].last = True
+
         logger.success("Pages composed")
         signals.page_composed.send(self)
 
@@ -143,7 +150,7 @@ class Generator(object):
 
     @step
     def render_posts(self, sender):
-        """Render all posts to 'post/' with template 'post.html'"""
+        """Render posts to html with template 'post.html'"""
         mkdir_p(Post.out_dir)
 
         for post in self.posts:
@@ -153,11 +160,12 @@ class Generator(object):
 
     @step
     def render_pages(self, sender):
-        """Render all pages to 'page/' with template 'page.html'"""
+        """Render pages to html with template 'page.html'"""
         mkdir_p(Page.out_dir)
 
         for page in self.pages:
             self.render_to(page.out, Page.template, page=page)
+
         logger.success("Pages rendered")
 
 

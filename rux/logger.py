@@ -1,6 +1,11 @@
 # coding=utf8
 
-"""ru's logger"""
+"""
+    rux.logger
+    ~~~~~~~~~~
+
+    rux's colorful logger.
+"""
 
 from datetime import datetime
 import logging
@@ -17,7 +22,6 @@ class ColoredFormatter(Formatter):
 
     def format(self, record):
         message = record.getMessage()
-
         mapping = {
             'CRITICAL': 'bgred',
             'ERROR': 'red',
@@ -27,13 +31,12 @@ class ColoredFormatter(Formatter):
             'DEBUG': 'bggrey',
         }
         color = mapping.get(record.levelname, 'white')
-
         level = colored('%-8s' % record.levelname, color)
-        time = colored(datetime.now().strftime("(%H:%M:%S)"), "magenta")
+        time = colored(datetime.now().strftime("(%H:%M:%S)"), 'magenta')
         return " ".join([level, time, message])
 
 
-logger = getLogger('ru')
+logger = getLogger('rux')
 logging.SUCCESS = 25  # 25 is between WARNING(30) and INFO(20)
 logging.addLevelName(logging.SUCCESS, 'SUCCESS')
 logger.success = lambda msg, *args, **kwargs: logger.log(logging.SUCCESS, msg, *args, **kwargs)

@@ -1,6 +1,11 @@
 # coding=utf8
 
-"""ru's models"""
+"""
+    rux.models
+    ~~~~~~~~~~
+
+    rux's models: blog, author, post, page
+"""
 
 from . import src_ext, out_ext, src_dir, out_dir
 from .utils import join

@@ -1,6 +1,11 @@
 # coding=utf8
 
-"""post parser"""
+"""
+    rux.parser
+    ~~~~~~~~~~
+
+    Parser from post source to html.
+"""
 
 from datetime import datetime
 import os

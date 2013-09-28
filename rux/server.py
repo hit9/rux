@@ -1,13 +1,11 @@
 # coding=utf8
 
-"""web server and watcher"""
-from . import src_ext
-from .config import config
-from .exceptions import SourceDirectoryNotFound
-from .generator import generator
-from .logger import logger
-from .models import Post
-from .utils import join
+"""
+    rux.server
+    ~~~~~~~~~~
+
+    rux's server, include a web server and a watcher.
+"""
 
 import sys
 import logging
@@ -22,14 +20,20 @@ from BaseHTTPServer import HTTPServer
 from BaseHTTPServer import BaseHTTPRequestHandler
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 
+from . import src_ext
+from .config import config
+from .exceptions import SourceDirectoryNotFound
+from .generator import generator
+from .logger import logger
+from .models import Post
+from .utils import join
+
 
 class Handler(SimpleHTTPRequestHandler):
     """Our own http handler"""
 
     def log_message(self, format, *args):
-        logger.info("%s - %s" % (
-            self.address_string(), format % args
-        ))
+        logger.info("%s - %s" % (self.address_string(), format % args))
 
 
 class MultiThreadedHTTPServer(ThreadingMixIn, HTTPServer):
@@ -42,11 +46,11 @@ class Server(object):
     changes to auto rebuild , or start a web server here the same time"""
 
     def __init__(self):
-        # files_stat: filepath to file's updated time dict
+        # filepath to file's updated time dict
         self.files_stat = {}
-        # server: the server instance initialized from MultiThreadedHTTPServer
+        # the server instance initialized from MultiThreadedHTTPServer
         self.server = None
-        # watcher: the thread to watch files for changes
+        # the thread to watch files for changes
         self.watcher = Thread(target=self.watch_files)
         # this tell thread to terminate when the main process ends
         self.watcher.daemon = True
@@ -60,9 +64,7 @@ class Server(object):
             logger.error(str(e))
             sys.exit(1)
 
-        logger.info(
-            "Serve at http://0.0.0.0:%d (ctrl-c to stop it) ..." % port
-        )
+        logger.info("Serve at http://0.0.0.0:%d (ctrl-c to stop) ..." % port)
 
         try:
             self.server.serve_forever()
@@ -97,7 +99,7 @@ class Server(object):
 
         try:
             while 1:
-                sleep(1.5)  # checkout every 1.5s
+                sleep(1.5)  # check every 1.5s
 
                 try:
                     files_stat = self.get_files_stat()
@@ -117,15 +119,13 @@ class Server(object):
 
                     self.files_stat = files_stat  # update files' stat
         except KeyboardInterrupt:
-            # I dont know,  but this exception won't be catched
+            # I dont know why, but this exception won't be catched
             # because absolutly each KeyboardInterrupt is catched by
             # the server thread, which will terminate this thread the same time
             logger.info("^C received, shutting down watcher")
             self.shutdown_watcher()
 
     def run(self, port=8888):
-        """start building blog, options: run a server, start watching
-        changes"""
         self.watcher.start()
         self.run_server(port)
 

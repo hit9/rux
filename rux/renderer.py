@@ -1,6 +1,11 @@
 # coding=utf8
 
-"""render data with jinja2 template"""
+"""
+    rux.renderer
+    ~~~~~~~~~~~~
+
+    Render data to html with jinja2 templates.
+"""
 
 from . import charset
 from .exceptions import JinjaTemplateNotFound
