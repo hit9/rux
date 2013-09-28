@@ -73,6 +73,15 @@ Quick start
   rux stop
   ```
 
+Common Issues
+--------------
+
+1. Installation troubles on Ubuntu: cann't find Python.h, solution:
+
+  ```
+  sudo apt-get install python-dev
+  ```
+
 License
 -------
 
