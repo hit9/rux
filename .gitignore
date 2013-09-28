@@ -6,5 +6,5 @@ venv
 .sass-cache
 test*
 build
-ru.egg*
+rux.egg*
 dist
