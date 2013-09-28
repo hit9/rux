@@ -1,10 +1,23 @@
 # coding=utf8
 
-# ru - love u forever.
+#     _/_/_/
+#    _/    _/  _/    _/  _/    _/
+#   _/_/_/    _/    _/    _/_/
+#  _/    _/  _/    _/  _/    _/
+# _/    _/    _/_/_/  _/    _/
+#
 
-"""global vars"""
+"""
+    Rux
+    ~~~
 
-version = "0.2.1"
+    A simple, micro and minimal site generator.
+
+    :author: hit9
+    :license: BSD
+"""
+
+version = "0.3.0"
 charset = "utf8"
 src_ext = ".md"
 out_ext = ".html"

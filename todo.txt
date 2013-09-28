@@ -5,3 +5,4 @@
 - [x] rm about page, add author information to layout footer
 - [ ] add port option to ru
 - [x] default theme moved to submodule
+- [ ] change name from ru to Rux
