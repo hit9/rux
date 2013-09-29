@@ -26,7 +26,6 @@ Features
 
 - Source in markdown 
 - No tags, No categories
-- No comment system(disqus, duoshuo..)
 - Minimal configuration
 - Running in the background as a daemon
 
@@ -116,4 +115,4 @@ Common Issues
 License
 -------
 
-BSD
+BSD. `Rux` can be used, modified in any purpose.

@@ -1,7 +1,14 @@
+# Configuration for this blog.
+
 [blog]
 name = "Sunshine Every Day"
 description = "Never give up, my determination is to chase for success"
 theme = "default"
+
 [author]
 name = "hit9"
 email = "nz2324@126.com"
+
+[disqus]
+enable = true  # enable comment? true or false
+shortname = "rux"
