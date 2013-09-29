@@ -84,7 +84,7 @@ Quick start
   vim src/post/2013-03-27-10-10.md
   ```
 
-  `rux` will automatically build blog each time you save.
+  `rux` will automatically build blog each time you save. Preview site at `http://0.0.0.0:8888`.
 
 6. stop the server
 

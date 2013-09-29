@@ -27,7 +27,7 @@ usage = """Usage:
   rux [-h|-v]
   rux post
   rux (deploy|build|clean|serve)
-  rux (start|stop|status)
+  rux (start|stop|status|restart)
 
 Options:
   -h --help         show help
@@ -41,7 +41,8 @@ Commands:
   clean             clean built htmls
   start             start builder server
   stop              stop builder server
-  status            report builder server's status"""
+  status            report builder server's status
+  restart           restart builder server"""
 
 
 def deploy_blog():
@@ -59,7 +60,7 @@ def new_post():
 
     # file is named as formatted time
     now = datetime.datetime.now()
-    now_s = now.strftime("%Y-%m-%d-%H-%M")
+    now_s = now.strftime('%Y-%m-%d-%H-%M')
     filepath = join(Post.src_dir, now_s + src_ext)
 
     if not exists(Post.src_dir):
@@ -68,11 +69,11 @@ def new_post():
 
     # write sample content to new file
     content = """Title\n=====\nMarkdown content..."""
-    f = open(filepath, "w")
+    f = open(filepath, 'w')
     f.write(content)
     f.close()
 
-    logger.success("new post created: %s" % filepath)
+    logger.success('new post created: %s' % filepath)
 
 
 def clean():
@@ -80,14 +81,14 @@ def clean():
     logger.info(clean.__doc__)
 
     paths = [
-        "post",
-        "page",
-        "index.html",
+        'post',
+        'page',
+        'index.html',
     ]
 
-    cmd = ["rm", "-rf"] + paths
+    cmd = ['rm', '-rf'] + paths
     call(cmd)
-    logger.success("clean done")
+    logger.success('clean done')
 
 
 def main():
@@ -95,22 +96,24 @@ def main():
 
     logger.setLevel(logging.INFO)
 
-    if arguments["post"]:
+    if arguments['post']:
         new_post()
-    elif arguments["deploy"]:
+    elif arguments['deploy']:
         deploy_blog()
-    elif arguments["build"]:
+    elif arguments['build']:
         generator.generate()
     elif arguments["serve"]:
         server.run()
-    elif arguments["clean"]:
+    elif arguments['clean']:
         clean()
-    elif arguments["start"]:
+    elif arguments['start']:
         rux_daemon.start()
-    elif arguments["stop"]:
+    elif arguments['stop']:
         rux_daemon.stop()
-    elif arguments["status"]:
+    elif arguments['status']:
         rux_daemon.status()
+    elif arguments['restart']:
+        rux_daemon.restart()
     else:
         exit(usage)
 
