@@ -10,6 +10,7 @@ import datetime
 import logging
 from os.path import dirname, exists
 from subprocess import call
+import sys
 
 from . import __version__
 from .daemon import rux_daemon
