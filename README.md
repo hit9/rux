@@ -40,13 +40,13 @@ Installation
   mkdir myblog && cd myblog
   virtualenv venv
   . venv/bin/activate
-  pip install git+git://github.com/hit9/rux.git
+  pip install rux
   ```
 
 - System-Wide Installation
 
   ```
-  sudo pip install git+git://github.com/hit9/rux.git
+  sudo pip install rux
   ```
 
 Quick start
