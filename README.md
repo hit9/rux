@@ -12,7 +12,7 @@ Rux
 
 A simple, micro and lightweight static site generator, built for mini needs personal blog.
 
-latest version: v0.3.1
+latest version: v0.3.3
 
 Sample site
 -----------
