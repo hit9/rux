@@ -1,11 +1,11 @@
 # coding=utf8
+
 """
     rux.cli
     ~~~~~~~
 
-    rux's commandline interface and simple tasks.
+    rux's commandline interface.
 """
-
 import datetime
 import logging
 from os.path import dirname, exists
@@ -13,11 +13,13 @@ from subprocess import call
 import sys
 
 from . import __version__
+from . import src_ext
 from .daemon import rux_daemon
 from .exceptions import SourceDirectoryNotFound
 from .generator import generator
 from .logger import logger
-from .models import Post, src_ext
+from .models import Post
+from .rtcodes import SOURCE_DIR_NOT_FOUND
 from .server import server
 from .utils import join
 
@@ -38,18 +40,18 @@ Commands:
   post              create an empty new post
   deploy            deploy new blog in current directory
   build             build source files to html
-  server            start http server at 0.0.0.0:8888
+  serve             start rux server
   clean             clean built htmls
-  start             start builder server
-  stop              stop builder server
-  status            report builder server's status
-  restart           restart builder server"""
+  start             start rux server daemon
+  stop              stop rux server daemon
+  status            report rux server daemon status
+  restart           restart rux server daemon"""
 
 
 def deploy_blog():
     """deploy blog to current directory"""
     logger.info(deploy_blog.__doc__)
-    # rsync -aqu path/to/res/* .
+    # `rsync -aqu path/to/res/* .`
     call('rsync -aqu ' + join(dirname(__file__), 'res', '*') + ' .', shell=True)
     logger.success('deploy done')
     logger.info('Please edit config.toml to meet your needs')
@@ -58,44 +60,37 @@ def deploy_blog():
 def new_post():
     """touch an empty new post to src/"""
     logger.info(new_post.__doc__)
-
-    # file is named as formatted time
+    # make the new post's filename
     now = datetime.datetime.now()
     now_s = now.strftime('%Y-%m-%d-%H-%M')
     filepath = join(Post.src_dir, now_s + src_ext)
-
-    if not exists(Post.src_dir):
+    # check if `src/` exists
+    if not exist(Post.src_dir):
         logger.error(SourceDirectoryNotFound.__doc__)
-        sys.exit(1)
-
-    # write sample content to new file
-    content = """Title\n=====\nMarkdown content..."""
+        sys.exit(SOURCE_DIR_NOT_FOUND)
+    # write sample content to new post
+    content = (
+        'Title\n'
+        '=====\n'
+        'Markdown content ..'
+    )
     f = open(filepath, 'w')
     f.write(content)
     f.close()
-
     logger.success('new post created: %s' % filepath)
 
 
 def clean():
     """clean: rm -rf post page index.html"""
     logger.info(clean.__doc__)
-
-    paths = [
-        'post',
-        'page',
-        'index.html',
-    ]
-
-    cmd = ['rm', '-rf'] + paths
-    call(cmd)
+    paths = ['post', 'page', 'index.html']
+    call(['rm', '-rf'] + paths)
     logger.success('clean done')
 
 
 def main():
     arguments = docopt(usage, version=__version__)
-
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.INFO)  # !important
 
     if arguments['post']:
         new_post()
