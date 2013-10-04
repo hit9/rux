@@ -37,7 +37,7 @@ class ColoredFormatter(Formatter):
 
 
 logger = getLogger('rux')
-logging.SUCCESS = 25  # 25 is between WARNING(30) and INFO(20)
+logging.SUCCESS = 25  # WARNING(30) > SUCCESS(25) > INFO(20)
 logging.addLevelName(logging.SUCCESS, 'SUCCESS')
 logger.success = lambda msg, *args, **kwargs: logger.log(logging.SUCCESS, msg, *args, **kwargs)
 
