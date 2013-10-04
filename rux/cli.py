@@ -19,7 +19,7 @@ from .exceptions import SourceDirectoryNotFound
 from .generator import generator
 from .logger import logger
 from .models import Post
-from .rtcodes import SOURCE_DIR_NOT_FOUND
+from .exitcodes import SOURCE_DIR_NOT_FOUND
 from .server import server
 from .utils import join
 
@@ -42,10 +42,10 @@ Commands:
   build             build source files to html
   serve             start rux server
   clean             clean built htmls
-  start             start rux server daemon
-  stop              stop rux server daemon
-  status            report rux server daemon status
-  restart           restart rux server daemon"""
+  start             start builder daemon
+  stop              stop builder daemon
+  status            report builder daemon status
+  restart           restart builder daemon"""
 
 
 def deploy_blog():
@@ -65,7 +65,7 @@ def new_post():
     now_s = now.strftime('%Y-%m-%d-%H-%M')
     filepath = join(Post.src_dir, now_s + src_ext)
     # check if `src/` exists
-    if not exist(Post.src_dir):
+    if not exists(Post.src_dir):
         logger.error(SourceDirectoryNotFound.__doc__)
         sys.exit(SOURCE_DIR_NOT_FOUND)
     # write sample content to new post
