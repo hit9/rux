@@ -4,21 +4,23 @@
     rux.server
     ~~~~~~~~~~
 
-    rux's server, include a web server and a watcher.
+    rux's server, include a web server and a watcher, running in two threads,
+    the file watcher will watch source files updates and start building process
+    automatically, the http server host the static site at localhost:8888
 """
 
-import sys
+from BaseHTTPServer import BaseHTTPRequestHandler
+from BaseHTTPServer import HTTPServer
 import logging
-import socket
 from os import listdir as ls
 from os import stat
 from os.path import exists
-from time import sleep
-from threading import Thread
-from SocketServer import ThreadingMixIn
-from BaseHTTPServer import HTTPServer
-from BaseHTTPServer import BaseHTTPRequestHandler
 from SimpleHTTPServer import SimpleHTTPRequestHandler
+import socket
+from SocketServer import ThreadingMixIn
+import sys
+from threading import Thread
+from time import sleep
 
 from . import src_ext
 from .config import config
@@ -30,9 +32,9 @@ from .utils import join
 
 
 class Handler(SimpleHTTPRequestHandler):
-    """Our own http handler"""
 
     def log_message(self, format, *args):
+        # http server's output message formatter
         logger.info("%s - %s" % (self.address_string(), format % args))
 
 
@@ -42,21 +44,17 @@ class MultiThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 
 
 class Server(object):
-    """To build source to html, optional, can watch files for
-    changes to auto rebuild , or start a web server here the same time"""
+    """rux's server, include a web server to host this static blog at localhost
+    , and a files watcher to automatically once source files updated"""
 
     def __init__(self):
-        # filepath to file's updated time dict
-        self.files_stat = {}
-        # the server instance initialized from MultiThreadedHTTPServer
-        self.server = None
-        # the thread to watch files for changes
-        self.watcher = Thread(target=self.watch_files)
-        # this tell thread to terminate when the main process ends
-        self.watcher.daemon = True
+        self.files_stat = {}  # dict, {filepath: file updated time}
+        self.server = None  # instance of `MultiThreadedHTTPServer`
+        self.watcher = Thread(target=self.watch_files)  # the thread of watcher
+        self.watcher.daemon = True  # terminate watcher once main process ends
 
     def run_server(self, port=8888):
-        """run a server binding to port(default 8888)"""
+        """run a server binding to port(default: 8888)"""
 
         try:
             self.server = MultiThreadedHTTPServer(('0.0.0.0', port), Handler)
@@ -64,7 +62,8 @@ class Server(object):
             logger.error(str(e))
             sys.exit(1)
 
-        logger.info("Serve at http://0.0.0.0:%d (ctrl-c to stop) ..." % port)
+        logger.info("HTTP serve at http://0.0.0.0:%d (ctrl-c to stop) ..."
+                    % port)
 
         try:
             self.server.serve_forever()
@@ -73,7 +72,7 @@ class Server(object):
             self.shutdown_server()
 
     def get_files_stat(self):
-        """Get current filepath to file updated time dict"""
+        """get source files' update time"""
 
         if not exists(Post.src_dir):
             logger.error(SourceDirectoryNotFound.__doc__)
@@ -89,7 +88,7 @@ class Server(object):
         if exists(config.filepath):
             paths.append(config.filepath)
 
-        # files - a <filepath to updated time> dict
+        # files: a <filepath to updated time> dict
         files = dict((p, stat(p).st_mtime) for p in paths)
         return files
 
@@ -126,6 +125,7 @@ class Server(object):
             self.shutdown_watcher()
 
     def run(self, port=8888):
+        """start web server and watcher"""
         self.watcher.start()
         self.run_server(port)
 
