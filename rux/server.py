@@ -77,7 +77,7 @@ class Server(object):
 
         if not exists(Post.src_dir):
             logger.error(SourceDirectoryNotFound.__doc__)
-            sys.exit(1)
+            sys.exit(SourceDirectoryNotFound.exit_code)
 
         paths = []
 

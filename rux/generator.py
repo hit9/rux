@@ -61,7 +61,7 @@ class Generator(object):
             conf = config.parse()
         except ConfigSyntaxError as e:
             logger.error(e.__doc__)
-            sys.exit(1)
+            sys.exit(e.exit_code)
 
         update_nested_dict(self.config, conf)
 
@@ -98,7 +98,7 @@ class Generator(object):
 
         if not exists(Post.src_dir):
             logger.error(SourceDirectoryNotFound.__doc__)
-            sys.exit(1)
+            sys.exit(SourceDirectoryNotFound.exit_code)
 
         files = []
 
@@ -146,7 +146,7 @@ class Generator(object):
             renderer.render_to(path, template, **data)
         except JinjaTemplateNotFound as e:
             logger.error(e.__doc__ + ": Template '%s'" % template)
-            sys.exit(1)  # template not found,  must exit the script
+            sys.exit(e.exit_code)  # template not found,  must exit the script
 
     @step
     def render_posts(self, sender):

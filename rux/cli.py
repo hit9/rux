@@ -19,7 +19,6 @@ from .exceptions import SourceDirectoryNotFound
 from .generator import generator
 from .logger import logger
 from .models import Post
-from .exitcodes import SOURCE_DIR_NOT_FOUND
 from .server import server
 from .utils import join
 
@@ -67,7 +66,7 @@ def new_post():
     # check if `src/` exists
     if not exists(Post.src_dir):
         logger.error(SourceDirectoryNotFound.__doc__)
-        sys.exit(SOURCE_DIR_NOT_FOUND)
+        sys.exit(SourceDirectoryNotFound.exit_code)
     # write sample content to new post
     content = (
         'Title\n'

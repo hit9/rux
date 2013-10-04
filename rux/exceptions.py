@@ -14,17 +14,46 @@ class RuxException(Exception):
     pass
 
 
-class SourceDirectoryNotFound(RuxException):
-    """Source directory was not found"""
+# !Fatal
+
+class RuxFatalError(RuxException):
+    """There was a fatal error exception that occurred in rux process"""
+    exit_code = 1  # must terminate its process with a non-zero exit code
     pass
 
 
-class ParseException(RuxException):
+class SourceDirectoryNotFound(RuxFatalError):
+    """Source directory was not found"""
+
+    exit_code = 2
+    pass
+
+
+class ConfigSyntaxError(RuxFatalError):
+    """Toml syntax error occurred in config.toml"""
+    exit_code = 3
+    pass
+
+
+class JinjaTemplateNotFound(RuxFatalError):
+    """Jinja2 template was not found"""
+    exit_code = 4
+    pass
+
+
+# Warning
+
+class RuxWarnException(RuxException):  # warning exception
+    """There was a warning exception that occurred in rux process"""
+    pass
+
+
+class ParseException(RuxWarnException):
     """There was an exception while parsing the source"""
     pass
 
 
-class RenderException(RuxException):
+class RenderException(RuxWarnException):
     """There was an exception while rendering to html"""
     pass
 
@@ -37,14 +66,4 @@ class PostTitleNotFound(ParseException):
 class PostNameInvalid(ParseException):
     """Invalid post name, should be datetime, like '1992-04-05-10-10'"""
     # 1992-04-05 is my birthday! :)
-    pass
-
-
-class ConfigSyntaxError(RuxException):
-    """Toml syntax error occurred in config.toml"""
-    pass
-
-
-class JinjaTemplateNotFound(RuxException):
-    """Jinja2 template was not found"""
     pass
