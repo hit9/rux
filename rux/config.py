@@ -31,6 +31,10 @@ class Config(object):
         'author': {
             'name': 'hit9',
             'email': 'nz2324@126.com',
+        },
+        'disqus': {
+            'enable': True,
+            'shortname': 'rux'
         }
     }
 
