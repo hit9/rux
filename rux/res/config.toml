@@ -14,4 +14,4 @@ enable = true  # enable comment? true or false
 shortname = "rux"
 
 [links]  # the links display in nav bar
-# Github = "hit9"  # for example
+# Github = "https://github.com/hit9"  # for example
