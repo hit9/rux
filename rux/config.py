@@ -35,7 +35,8 @@ class Config(object):
         'disqus': {
             'enable': True,
             'shortname': 'rux'
-        }
+        },
+        'links': {}
     }
 
     def parse(self):
