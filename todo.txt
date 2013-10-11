@@ -9,3 +9,5 @@
 - [ ] hold memory usage
 - [ ] use 5 processes to build blog
 - [ ] watcher detects files change: add-update-delete
+- [ ] mutiple process
+- [ ] memory leak!

@@ -137,10 +137,12 @@ class Generator(object):
             # render pages to html
             render_to(page.out, Page.template, page=page)
             # now this page is over, free its posts
-            page.posts = []
+            del page.posts[:]
+            del page.posts
 
         # free all pages
         del pages[:]
+        del pages
 
     def generate(self):
         self.initialize()
