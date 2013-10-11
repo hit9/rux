@@ -44,10 +44,7 @@ class Generator(object):
         2. chunk posts to pages
         3. group all pages into 4 processes
         4. lunch each process to build
-        5. each process will build one page by one page(to save memory usage),
-      memory usage in each process will at most be::
-
-          POSTS_COUNT_EACH_PAGE * POST_MAX_SIZE
+        5. each process will build one page by one page(to save memory usage)
 
     Build objects at first, and fill in them with data(file contents) one
     by one.
@@ -145,8 +142,6 @@ class Generator(object):
         # free all pages
         del pages[:]
 
-        gc.collect()
-
     def generate(self):
         self.initialize()
         pages = self.get_pages()
@@ -155,6 +150,6 @@ class Generator(object):
     def re_generate(self):
         self.reset()
         self.generate()
-
+        gc.collect()
 
 generator = Generator()
