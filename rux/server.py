@@ -98,7 +98,7 @@ class Server(object):
 
         try:
             while 1:
-                sleep(1.5)  # check every 1.5s
+                sleep(1)  # check every 1s
 
                 try:
                     files_stat = self.get_files_stat()

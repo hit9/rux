@@ -50,20 +50,22 @@ class Post(object):
       datetime  datetime    post's created time
       markdown  unicode     post's body source, it's in markdown
       html      unicode     post's html, parsed from markdown
-      summary   unicode     post's summary"""
+      summary   unicode     post's summary
+      filepath  unicode     post's filepath"""
 
     src_dir = src_dir
     out_dir = join(out_dir, "post")
     template = "post.html"
 
     def __init__(self, name="", title="", datetime=None, markdown="",
-                 html="", summary=""):
+                 html="", summary="", filepath=""):
         self.name = name
         self.title = title
         self.datetime = datetime
         self.markdown = markdown
         self.html = html
         self.summary = summary
+        self.filepath = filepath
 
     @property
     def src(self):

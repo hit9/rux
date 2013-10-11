@@ -8,165 +8,153 @@
 """
 
 from datetime import datetime
+import gc
 from os import listdir as ls
 from os.path import exists
 import sys
 
-from . import src_ext
+from . import src_ext, charset
 from .config import config
 from .exceptions import *
 from .logger import logger
 from .models import blog, author, Post, Page
 from .parser import parser
 from .renderer import renderer
-import signals
 from .utils import chunks, update_nested_dict, mkdir_p, join
 
 
+def render_to(path, template, **data):
+    """shortcut to render data with template and then write to path.
+    Just add exception catch to renderer.render_to"""
+    try:
+        renderer.render_to(path, template, **data)
+    except JinjaTemplateNotFound as e:
+        logger.error(e.__doc__ + ": Template: '%s'" % template)
+        sys.exit(e.exit_code)
+
+
 class Generator(object):
+    """
+    This is the core builder, parse markdown source and render html
+    with jinja2 templates.
+
+    We use at most 4 processes to build posts.
+
+        1. sort source files by its created time
+        2. chunk posts to pages
+        3. group all pages into 4 processes
+        4. lunch each process to build
+        5. each process will build one page by one page(to save memory usage),
+      memory usage in each process will at most be::
+
+          POSTS_COUNT_EACH_PAGE * POST_MAX_SIZE
+
+    Build objects at first, and fill in them with data(file contents) one
+    by one.
+    """
+    POSTS_COUNT_EACH_PAGE = 9  # each page has 9 posts at most
+    BUILDER_PROCESS_COUNT = 4  # at most 4 processes to build posts
 
     def __init__(self):
         self.reset()
-        self.register_signals()
 
     def reset(self):
-        """reset resources objects to empty"""
-        self.posts = []
-        self.pages = []
         self.config = config.default
-        self.blog = blog
         self.author = author
+        self.blog = blog
 
-    def register_signals(self):
-        """register all blinker signals"""
-        signals.initialized.connect(self.parse_posts)
-        signals.posts_parsed.connect(self.compose_pages)
-        signals.posts_parsed.connect(self.render_posts)
-        signals.page_composed.connect(self.render_pages)
-
-    def step(step_method):
-        """decorator to wrap each step method, each step will
-        logging its doc to stdout"""
-        def wrapper(self, *args, **kwargs):
-            logger.info(step_method.__doc__)
-            return step_method(self, *args, **kwargs)
-        return wrapper
-
-    @step
     def initialize(self):
         """Initialize configuration and renderer environment"""
 
-        # read config to update the default
+        # read config
         try:
             conf = config.parse()
         except ConfigSyntaxError as e:
             logger.error(e.__doc__)
             sys.exit(e.exit_code)
 
+        # update default configuration with use defined
         update_nested_dict(self.config, conf)
-
-        # update blog and author according to configuration
         self.blog.__dict__.update(self.config['blog'])
         self.author.__dict__.update(self.config['author'])
 
-        # -------- initialize jinja2 --
+        # initialize jinja2
+        templates = join(self.blog.theme, 'templates')  # templates directory
+        # set a renderer
+        jinja2_global_data = {
+            'blog': self.blog, 'author': self.author, 'config': self.config
+        }
+        renderer.initialize(templates, jinja2_global_data)
+        logger.success('Initialized')
 
-        # get templates directory
-        templates = join(self.blog.theme, "templates")
-        # set a render
-        jinja_global_data = dict(
-            blog=self.blog,
-            author=self.author,
-            config=self.config,
-        )
-        renderer.initialize(templates, jinja_global_data)
-
-        logger.success("Generator initialized")
-        # send signal that generator was already initialized
-        signals.initialized.send(self)
-
-    # make alias to initialize
-    generate = initialize
-
-    def re_generate(self):
-        self.reset()
-        self.generate()
-
-    @step
-    def parse_posts(self, sender):
-        """Parse and sort posts"""
+    def get_pages(self):
+        """Sort source files by its created time, and then chunk all posts into
+        9 pages"""
 
         if not exists(Post.src_dir):
             logger.error(SourceDirectoryNotFound.__doc__)
             sys.exit(SourceDirectoryNotFound.exit_code)
 
-        files = []
+        source_files = [join(Post.src_dir, fn)
+                        for fn in ls(Post.src_dir) if fn.endswith(src_ext)]
 
-        for fn in ls(Post.src_dir):
-            if fn.endswith(src_ext):
-                files.append(join(Post.src_dir, fn))
+        posts = []  # all posts objects
 
-        for filepath in files:
+        for filepath in source_files:
             try:
-                data = parser.parse_file(filepath)
-            except ParseException, e:
+                data = parser.parse_filename(filepath)
+            except ParseException as e:  # skip single post parse exceptions
                 logger.warn(e.__doc__ + ": filepath '%s'" % filepath)
-                pass
             else:
-                self.posts.append(Post(**data))
+                posts.append(Post(**data))
 
-        # sort posts by its create time, from new to old
-        self.posts.sort(
-            key=lambda post: post.datetime.timetuple(),
-            reverse=True
-        )
-        logger.success("Posts parsed")
-        signals.posts_parsed.send(self)
+        # sort posts by its created time, from new to old
+        posts.sort(key=lambda post: post.datetime.timetuple(),
+                        reverse=True)
 
-    @step
-    def compose_pages(self, sender):
-        """Compose pages from posts"""
+        # chunk posts list to 9 groups
+        groups = chunks(posts, self.POSTS_COUNT_EACH_PAGE)
+        pages = [Page(number=idx, posts=list(group))
+                 for idx, group in enumerate(groups, 1)]
+        # mark the first page and the last page
+        if pages:  # !important: Not empty list
+            pages[0].first = True
+            pages[-1].last = True
 
-        groups = chunks(self.posts, 9)  # 9 posts each page
+        return pages
 
-        for index, group in enumerate(groups):
-            self.pages.append(Page(number=index+1, posts=list(group)))
-
-        if self.pages:  # !Not empty
-            self.pages[0].first = True
-            self.pages[-1].last = True
-
-        logger.success("Pages composed")
-        signals.page_composed.send(self)
-
-    def render_to(self, path, template, **data):
-        """shortcut to render data with template and then write to path.
-        Just add exception catch to renderer.render_to"""
-        try:
-            renderer.render_to(path, template, **data)
-        except JinjaTemplateNotFound as e:
-            logger.error(e.__doc__ + ": Template '%s'" % template)
-            sys.exit(e.exit_code)  # template not found,  must exit the script
-
-    @step
-    def render_posts(self, sender):
-        """Render posts to html with template 'post.html'"""
+    def build_pages(self, pages):
+        """Build pages, and its posts the same time"""
+        # check output directory
         mkdir_p(Post.out_dir)
-
-        for post in self.posts:
-            self.render_to(post.out, Post.template, post=post)
-
-        logger.success("Posts rendered")
-
-    @step
-    def render_pages(self, sender):
-        """Render pages to html with template 'page.html'"""
         mkdir_p(Page.out_dir)
 
-        for page in self.pages:
-            self.render_to(page.out, Page.template, page=page)
+        for page in pages:
+            for post in page.posts:
+                # parse file content
+                data = parser.parse(
+                    open(post.filepath).read().decode(charset))
+                post.__dict__.update(data)  # set attributes: html, markdown..
+                # render to html
+                render_to(post.out, Post.template, post=post)
+            # render pages to html
+            render_to(page.out, Page.template, page=page)
+            # now this page is over, free its posts
+            page.posts = []
 
-        logger.success("Pages rendered")
+        # free all pages
+        del pages[:]
+
+        gc.collect()
+
+    def generate(self):
+        self.initialize()
+        pages = self.get_pages()
+        self.build_pages(pages)
+
+    def re_generate(self):
+        self.reset()
+        self.generate()
 
 
 generator = Generator()

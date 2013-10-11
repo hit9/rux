@@ -116,20 +116,19 @@ class Parser(object):
         """Parse markdown to html"""
         return self.markdown.render(body)
 
-    def parse_file(self, file_path):
-        """parse post from file"""
-        name = os.path.basename(file_path)[:-len(src_ext)]
-
+    def parse_filename(self, filepath):
+        """parse post source files name to datetime object"""
+        name = os.path.basename(filepath)[:-len(src_ext)]
         try:
             dt = datetime.strptime(name, "%Y-%m-%d-%H-%M")
         except ValueError:
             raise PostNameInvalid
+        return {'name': name, 'datetime': dt, 'filepath': filepath}
 
-        data = self.parse(open(file_path).read().decode(charset))
-
-        data["datetime"] = dt
-        data["name"] = name
-
+    def parse_file(self, filepath):
+        """parse post from file"""
+        data = self.parse(open(filepath).read().decode(charset))
+        data.update(self.parse_filename(filepath))
         return data
 
 
