@@ -111,7 +111,6 @@ class Server(object):
 
                     try:
                         generator.re_generate()
-                        logger.success("Rebuild success")
                     except SystemExit:  # catch sys.exit, it means fatal error
                         logger.error("Error occurred, server shut down")
                         self.shutdown_server()

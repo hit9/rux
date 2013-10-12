@@ -9,9 +9,12 @@
 
 from datetime import datetime
 import gc
+from itertools import groupby
+import multiprocessing
 from os import listdir as ls
 from os.path import exists
 import sys
+import time
 
 from . import src_ext, charset
 from .config import config
@@ -145,9 +148,29 @@ class Generator(object):
         del pages
 
     def generate(self):
+        start_time = time.time()
         self.initialize()
         pages = self.get_pages()
-        self.build_pages(pages)
+
+        # group all pages into 4 processes
+        processes = []
+        n = self.BUILDER_PROCESS_COUNT
+        # group pages into 4 parts, thanks to itertools
+        # I have to sort this list before I groupby it
+        groups = zip(*groupby(sorted(
+            pages, key=lambda x: x.number % n), lambda x: x.number % n))[1]
+
+        for group in groups:
+            process = multiprocessing.Process(target=self.build_pages,
+                                        args=(list(group),))
+            processes.append(process)
+            process.start()
+
+        for process in processes:
+            process.join()
+
+        logger.success("Build done with %d processes in %.3f seconds" % (
+            len(processes), time.time() - start_time))
 
     def re_generate(self):
         self.reset()
