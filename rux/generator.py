@@ -169,7 +169,7 @@ class Generator(object):
         for process in processes:
             process.join()
 
-        logger.success("Build done with %d processes in %.3f seconds" % (
+        logger.success("Build done with %d process in %.3f seconds" % (
             len(processes), time.time() - start_time))
 
     def re_generate(self):
