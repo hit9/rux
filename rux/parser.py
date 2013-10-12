@@ -22,6 +22,8 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 from pygments.util import ClassNotFound
 
+src_ext_len = len(src_ext)  # cache this, call only once
+
 
 class ColorRender(HtmlRenderer, SmartyPants):
     """misaka render with color codes feature"""
@@ -118,7 +120,7 @@ class Parser(object):
 
     def parse_filename(self, filepath):
         """parse post source files name to datetime object"""
-        name = os.path.basename(filepath)[:-len(src_ext)]
+        name = os.path.basename(filepath)[:-src_ext_len]
         try:
             dt = datetime.strptime(name, "%Y-%m-%d-%H-%M")
         except ValueError:
