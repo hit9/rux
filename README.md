@@ -1,20 +1,13 @@
 Rux
 ===
 
-```
-     _/_/_/
-    _/    _/  _/    _/  _/    _/
-   _/_/_/    _/    _/    _/_/
-  _/    _/  _/    _/  _/    _/
- _/    _/    _/_/_/  _/    _/
-```
-
-
 A simple, micro and lightweight static site generator, built for mini needs personal blog.
+
+Rux is designed **only for writing**.
 
 latest version: v0.3.6
 
-Sample site
+Sample Site
 -----------
 
 - site: [love.hit9.org](http://love.hit9.org)
@@ -24,12 +17,10 @@ Sample site
 Features
 --------
 
-- Source in markdown 
+- Source is in markdown 
 - No tags, No categories
 - Minimal configuration
-- Running in the background as a daemon
-
-`rux` is designed **only for writing**.
+- Can run in the background as a daemon
 
 Installation
 ------------
@@ -94,19 +85,19 @@ Quick start
 Sample Post
 -----------
 
-A post is make up of title and body, split by `===`:
+A post is made up of title and body, split by `===`:
 
-```
-Title
-=====
+  ```
+  Title
+  =====
 
-Markdown body..
-```
+  Markdown body..
+  ```
 
 Common Issues
 --------------
 
-1. Installation troubles on Ubuntu: cann't find Python.h, solution:
+1. Installation troubles on Ubuntu: `cann't find Python.h`, solution:
 
   ```
   sudo apt-get install python-dev
@@ -115,4 +106,4 @@ Common Issues
 License
 -------
 
-BSD. `Rux` can be used, modified in any purpose.
+BSD. `Rux` can be used, modified for any purpose.

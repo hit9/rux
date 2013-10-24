@@ -11,3 +11,4 @@
 - [ ] mutiple process
 - [ ] memory leak!
 - [ ] theme font-size
+- [ ] more tests and code review
