@@ -98,7 +98,7 @@ class Server(object):
 
         try:
             while 1:
-                sleep(1.5)  # check every 1.5s
+                sleep(1)  # check every 1s
 
                 try:
                     files_stat = self.get_files_stat()
@@ -111,7 +111,6 @@ class Server(object):
 
                     try:
                         generator.re_generate()
-                        logger.success("Rebuild success")
                     except SystemExit:  # catch sys.exit, it means fatal error
                         logger.error("Error occurred, server shut down")
                         self.shutdown_server()

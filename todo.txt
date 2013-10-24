@@ -3,9 +3,12 @@
 - [x] update readme, add usage and update quickstart
 - [x] full readme
 - [x] rm about page, add author information to layout footer
-- [ ] add port option to ru
 - [x] default theme moved to submodule
 - [x] change name from ru to Rux
-- [ ] hold memory usage
-- [ ] use 5 processes to build blog
+- [x] hold memory usage
+- [x] use 5 processes to build blog
 - [ ] watcher detects files change: add-update-delete
+- [x] mutiple process
+- [x] memory leak!
+- [x] theme font-size
+- [ ] more tests and code review
