@@ -5,7 +5,7 @@ A simple, micro and lightweight static site generator, built for mini needs pers
 
 Rux is designed **only for writing**.
 
-latest version: v0.3.6
+latest version: v0.4.0
 
 Sample Site
 -----------

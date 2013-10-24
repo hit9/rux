@@ -112,7 +112,7 @@ class Generator(object):
         posts.sort(key=lambda post: post.datetime.timetuple(),
                         reverse=True)
 
-        # chunk posts list to 9 groups
+        # each page has 9 posts
         groups = chunks(posts, self.POSTS_COUNT_EACH_PAGE)
         pages = [Page(number=idx, posts=list(group))
                  for idx, group in enumerate(groups, 1)]
@@ -131,9 +131,10 @@ class Generator(object):
 
         for page in pages:
             for post in page.posts:
-                # parse file content
-                data = parser.parse(
-                    open(post.filepath).read().decode(charset))
+                # read and parse file content
+                with open(post.filepath) as f:
+                    content = f.read().decode(charset)
+                data = parser.parse(content)
                 post.__dict__.update(data)  # set attributes: html, markdown..
                 # render to html
                 render_to(post.out, Post.template, post=post)
@@ -179,6 +180,6 @@ class Generator(object):
     def re_generate(self):
         self.reset()
         self.generate()
-        gc.collect()
+        gc.collect()  # gc each time rebuild done
 
 generator = Generator()

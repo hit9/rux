@@ -6,9 +6,9 @@
 - [x] default theme moved to submodule
 - [x] change name from ru to Rux
 - [x] hold memory usage
-- [ ] use 5 processes to build blog
+- [x] use 5 processes to build blog
 - [ ] watcher detects files change: add-update-delete
-- [ ] mutiple process
-- [ ] memory leak!
-- [ ] theme font-size
+- [x] mutiple process
+- [x] memory leak!
+- [x] theme font-size
 - [ ] more tests and code review
