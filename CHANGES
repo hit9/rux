@@ -1,0 +1,9 @@
+v0.4.0
+------
+
+- rewrite `generator.py`, use mutiple processes to build
+  site.
+
+- some typo fix
+
+- remove blinker dependece, no signals working in building progress.
