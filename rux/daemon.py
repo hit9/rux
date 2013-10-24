@@ -88,9 +88,8 @@ class Daemon(object):
         signal.signal(signal.SIGINT, sigtermhandler)
 
         if self.verbose >= 1:
-            logger.success("Started, web server is listening at 0.0.0.0:8888, "
-                           "rux will automatically build blog whenever source "
-                           "changed")
+            logger.success("Started. Web server is listening at 0.0.0.0:8888, "
+                           "rux will automatically build once source changed")
 
         # Write pidfile
         atexit.register(self.delpid)  # Make sure pid file is removed if we \
