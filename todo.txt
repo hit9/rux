@@ -7,8 +7,7 @@
 - [x] change name from ru to Rux
 - [x] hold memory usage
 - [x] use 5 processes to build blog
-- [ ] watcher detects files change: add-update-delete
 - [x] mutiple process
 - [x] memory leak!
 - [x] theme font-size
-- [ ] more tests and code review
+- [ ] add theme vars to rux
