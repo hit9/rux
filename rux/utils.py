@@ -40,7 +40,7 @@ class Color(object):
     def colored(self, text, color=None):
 
         if color not in self.colors:
-            color = 'while'
+            color = 'white'
 
         clr = self.colors[color]
         return (self.prefix + '%dm%s' + self.suffix) % (clr, text)
