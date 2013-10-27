@@ -9,7 +9,6 @@
 
 from datetime import datetime
 import os
-import re
 
 from . import charset, src_ext
 from .exceptions import *
@@ -25,7 +24,7 @@ from pygments.util import ClassNotFound
 src_ext_len = len(src_ext)  # cache this, call only once
 
 
-class ColorRender(HtmlRenderer, SmartyPants):
+class RuxHtmlRenderer(HtmlRenderer, SmartyPants):
     """misaka render with color codes feature"""
 
     def _code_no_lexer(self, text):
@@ -64,13 +63,12 @@ class Parser(object):
 
     """
 
-    # title's matching pattern
-    title_p = re.compile(r'(?P<title>[^\n]+)\n\s*={3,}\s*\n*')
+    separator = '---'
 
     def __init__(self):
         """Initialize the parser, set markdown render handler as
         an attribute `markdown` of the parser"""
-        render = ColorRender()  # initialize the color render
+        render = RuxHtmlRenderer()  # initialize the color render
         extensions = (
             misaka.EXT_FENCED_CODE |
             misaka.EXT_NO_INTRA_EMPHASIS |
@@ -79,10 +77,27 @@ class Parser(object):
 
         self.markdown = misaka.Markdown(render, extensions=extensions)
 
+    def parse_markdown(self, markdown):
+        return self.markdown.render(markdown)
+
     def parse(self, source):
         """Parse unicode post source, return dict"""
 
-        title, markdown = self.split(source)
+        head, markdown = self.split(source)
+
+        # parse title, pic title from source
+        lines = filter(lambda x: x and not x.isspace(), head.splitlines())
+
+        if not lines:
+            raise PostTitleNotFound
+
+        title = lines[0]
+
+        title_pic = ''
+        if len(lines) == 2:
+            title_pic = lines[1]
+        elif len(lines) > 2:  # too many no-space lines
+            raise PostHeadSyntaxError
 
         # render to html
         html = self.markdown.render(markdown)
@@ -93,30 +108,25 @@ class Parser(object):
             'markdown': markdown,
             'html': html,
             'summary': summary,
+            'title_pic': title_pic
         }
 
     def split(self, source):
-        """split title and body from source, return tuple(title, body)"""
-        generator = self.title_p.finditer(source)
+        """split head and body, return tuple(head, body)"""
+        lines = source.splitlines()
+        l = None
 
-        try:  # try to get the first matched result
-            first_matched = generator.next()
-        except StopIteration:
-            # no title found
-            raise PostTitleNotFound
+        for lineno, line in enumerate(lines):
+            if self.separator in line:
+                l = lineno
+                break
 
-        # get position and title
-        title = first_matched.group('title')
-        end_position = first_matched.end()
+        if not l:
+            raise SeparatorNotFound
 
-        # get body
-        body = source[end_position:]
+        head, body = "\n".join(lines[:l]), "\n".join(lines[l+1:])
 
-        return title, body
-
-    def parse_markdown(self, markdown):
-        """Parse markdown to html"""
-        return self.markdown.render(body)
+        return head, body
 
     def parse_filename(self, filepath):
         """parse post source files name to datetime object"""
