@@ -9,6 +9,7 @@
 
 from . import src_ext, out_ext, src_dir, out_dir
 from .utils import join
+from hashlib import md5
 
 
 class Blog(object):
@@ -37,6 +38,11 @@ class Author(object):
     def __init__(self, name="", email=""):
         self.name = name
         self.email = email
+
+    @property
+    def gravatar_id(self):
+        """it's md5(author.email), author's gravatar_id"""
+        return md5(self.email).hexdigest()
 
 
 author = Author()

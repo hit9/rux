@@ -31,6 +31,7 @@ class Config(object):
         'author': {
             'name': 'hit9',
             'email': 'nz2324@126.com',
+            'description': 'Who are you?'
         },
         'disqus': {
             'enable': True,

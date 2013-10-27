@@ -6,12 +6,10 @@ description = "Never give up, my determination is to chase for success"
 theme = "default"
 
 [author]
-name = "hit9"
+name = "Hit9"
 email = "nz2324@126.com"
+description = "Who are you?"
 
 [disqus]
 enable = true  # enable comment? true or false
 shortname = "rux"
-
-[links]  # the links display in nav bar
-# Github = "https://github.com/hit9"  # for example
