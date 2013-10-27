@@ -5,7 +5,9 @@ A simple, micro and lightweight static site generator, built for mini needs pers
 
 Rux is designed **only for writing**.
 
-latest version: v0.4.0
+latest version: v0.5.0
+
+**Note**: rux may not be stable before v1.0 release.
 
 Sample Site
 -----------
@@ -85,13 +87,23 @@ Quick start
 Sample Post
 -----------
 
-A post is made up of title and body, split by `===`:
+A post is made up of head and body, split by `---`:
 
   ```
   Title
-  =====
+  Title Picture Url(optional)
+  ---
 
   Markdown body..
+  ```
+
+  example:
+
+  ```
+  Hello World!
+  http://here_is_title_picture.jpg
+  ---
+  Post content in markdown..
   ```
 
 Common Issues
