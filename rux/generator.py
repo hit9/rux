@@ -134,10 +134,15 @@ class Generator(object):
                 # read and parse file content
                 with open(post.filepath) as f:
                     content = f.read().decode(charset)
-                data = parser.parse(content)
-                post.__dict__.update(data)  # set attributes: html, markdown..
-                # render to html
-                render_to(post.out, Post.template, post=post)
+                try:
+                    data = parser.parse(content)
+                except ParseException, e:
+                    logger.warn(e.__doc__+" filepath '%s'" % post.filepath)
+                    pass  # skip the trouble posts
+                else:
+                    post.__dict__.update(data)  # set attributes: html, markdown..
+                    # render to html
+                    render_to(post.out, Post.template, post=post)
             # render pages to html
             render_to(page.out, Page.template, page=page)
             # now this page is over, free its posts
