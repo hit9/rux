@@ -25,6 +25,11 @@ You really should manage your theme in a standalone git repository, and use it
 as a submodule of your blog if your blog is under git versioning too.
 But it’s 100% ok to use themes not in the submodule way.
 
+Available Themes
+----------------
+
+- default https://github.com/hit9/rux-theme-default.git
+
 
 Theme Development
 -----------------
