@@ -8,3 +8,4 @@ test*
 build
 rux.egg*
 dist
+docs/_build
