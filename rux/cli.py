@@ -70,7 +70,8 @@ def new_post():
     # write sample content to new post
     content = (
         'Title\n'
-        '=====\n'
+        'Title Picture URL\n'
+        '---'
         'Markdown content ..'
     )
     f = open(filepath, 'w')
