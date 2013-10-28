@@ -9,6 +9,7 @@
 
 from . import src_ext, out_ext, src_dir, out_dir
 from .utils import join
+from hashlib import md5
 
 
 class Blog(object):
@@ -38,6 +39,11 @@ class Author(object):
         self.name = name
         self.email = email
 
+    @property
+    def gravatar_id(self):
+        """it's md5(author.email), author's gravatar_id"""
+        return md5(self.email).hexdigest()
+
 
 author = Author()
 
@@ -51,14 +57,15 @@ class Post(object):
       markdown  unicode     post's body source, it's in markdown
       html      unicode     post's html, parsed from markdown
       summary   unicode     post's summary
-      filepath  unicode     post's filepath"""
+      filepath  unicode     post's filepath
+      title_pic unicode     post's title picture"""
 
     src_dir = src_dir
     out_dir = join(out_dir, "post")
     template = "post.html"
 
     def __init__(self, name="", title="", datetime=None, markdown="",
-                 html="", summary="", filepath=""):
+                 html="", summary="", filepath="", title_pic=""):
         self.name = name
         self.title = title
         self.datetime = datetime
@@ -66,6 +73,7 @@ class Post(object):
         self.html = html
         self.summary = summary
         self.filepath = filepath
+        self.title_pic = title_pic
 
     @property
     def src(self):

@@ -104,7 +104,7 @@ class Generator(object):
             try:
                 data = parser.parse_filename(filepath)
             except ParseException as e:  # skip single post parse exceptions
-                logger.warn(e.__doc__ + ": filepath '%s'" % filepath)
+                logger.warn(e.__doc__ + ", filepath '%s'" % filepath)
             else:
                 posts.append(Post(**data))
 
@@ -137,7 +137,7 @@ class Generator(object):
                 try:
                     data = parser.parse(content)
                 except ParseException, e:
-                    logger.warn(e.__doc__+" filepath '%s'" % post.filepath)
+                    logger.warn(e.__doc__+", filepath '%s'" % post.filepath)
                     pass  # skip the trouble posts
                 else:
                     post.__dict__.update(data)  # set attributes: html, markdown..

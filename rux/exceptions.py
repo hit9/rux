@@ -58,12 +58,22 @@ class RenderException(RuxWarnException):
     pass
 
 
-class PostTitleNotFound(ParseException):
-    """There was no title found in post's source"""
-    pass
-
-
 class PostNameInvalid(ParseException):
     """Invalid post name, should be datetime, like '1992-04-05-10-10'"""
     # 1992-04-05 is my birthday! :)
+    pass
+
+
+class SeparatorNotFound(ParseException):
+    """Separator '---' not found in post source"""
+    pass
+
+
+class PostHeadSyntaxError(ParseException):
+    """Syntax error in post header part"""
+    pass
+
+
+class PostTitleNotFound(PostHeadSyntaxError):
+    """There was no title found in post's source"""
     pass
