@@ -71,7 +71,7 @@ def new_post():
     content = (
         'Title\n'
         'Title Picture URL\n'
-        '---'
+        '---\n'
         'Markdown content ..'
     )
     f = open(filepath, 'w')
