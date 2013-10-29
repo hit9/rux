@@ -7,6 +7,7 @@ theme = "default"
 name = "Hit9"
 email = "nz2324@126.com"
 description = "I am a happy boy."
+url = "http://hit9.org"
 
 [disqus]
 enable = true  # enable comment? true or false
