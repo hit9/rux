@@ -7,6 +7,11 @@ latest version: v0.5.1
 
 **Note**: rux may not be stable before v1.0 release.
 
+Demo Site
+----------
+
+- Site: http://rux.hit9.org
+- Code: https://github.com/hit9/rux/tree/gh-pages
 
 Documentation
 -------------
