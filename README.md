@@ -18,6 +18,17 @@ Documentation
 
 http://rux.readthedocs.org/
 
+Installation
+-------------
+
+Install the latest code:
+
+    pip install git+git://github.com/hit9/rux.git
+
+Install from pypi:
+
+    pip install rux
+
 Common Issues
 --------------
 
