@@ -3,13 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Micro static blog generator only for writting
-=============================================
+Micro and fast static blog generator only for writting
+======================================================
 
 What's it
 ---------
 
-Rux is a simple blog generator, which build markdown to html.
+Rux is a lightweight and very fast blog generator, which build markdown to html.
 
 Release v\ |version|. (:ref:`Installation <install>`)
 

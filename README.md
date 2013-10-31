@@ -1,9 +1,9 @@
 Rux
 ===
 
-Micro static blog generator designed **only for writing**.
+Micro and fast static blog generator designed **only for writing**.
 
-latest version: v0.5.1
+latest version: v0.5.3
 
 **Note**: rux may not be stable before v1.0 release.
 
