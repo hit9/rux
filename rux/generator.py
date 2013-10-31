@@ -16,7 +16,7 @@ from os.path import exists
 import sys
 import time
 
-from . import src_ext, charset
+from . import src_ext
 from .config import config
 from .exceptions import *
 from .logger import logger
@@ -133,7 +133,7 @@ class Generator(object):
             for post in page.posts:
                 # read and parse file content
                 with open(post.filepath) as f:
-                    content = f.read().decode(charset)
+                    content = f.read()
                 try:
                     data = parser.parse(content)
                 except ParseException, e:

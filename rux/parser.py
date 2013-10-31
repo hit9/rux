@@ -12,6 +12,7 @@ import os
 
 from . import charset, src_ext
 from .exceptions import *
+import libparser
 
 import houdini
 import misaka
@@ -81,23 +82,19 @@ class Parser(object):
         return self.markdown.render(markdown)
 
     def parse(self, source):
-        """Parse unicode post source, return dict"""
+        """Parse ascii post source, return dict"""
 
-        head, markdown = self.split(source)
+        rt, title, title_pic, markdown = libparser.parse(source)
 
-        # parse title, pic title from source
-        lines = filter(lambda x: x and not x.isspace(), head.splitlines())
-
-        if not lines:
+        if rt == -1:
+            raise SeparatorNotFound
+        elif rt == -2:
             raise PostTitleNotFound
 
-        title = lines[0]
-
-        title_pic = ''
-        if len(lines) == 2:
-            title_pic = lines[1]
-        elif len(lines) > 2:  # too many no-space lines
-            raise PostHeadSyntaxError
+        # change to unicode
+        title, title_pic, markdown = map(lambda x: x.decode(charset), (
+            title, title_pic, markdown
+        ))
 
         # render to html
         html = self.markdown.render(markdown)
