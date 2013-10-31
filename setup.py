@@ -1,6 +1,12 @@
+import os
 from setuptools import setup
 from rux import __version__
 
+dir_pth = os.path.dirname(__file__)
+
+out_so = os.path.join(dir_pth, 'rux', 'csrc', 'libparser.so')
+src_c = os.path.join(dir_pth, 'rux', 'csrc', 'libparser.c')
+os.system("gcc -fPIC -shared -o " + out_so + " " + src_c)
 
 setup(
     name='rux',
@@ -25,5 +31,5 @@ setup(
         # 'https://pypi.python.org/packages/source/b/blinker/blinker-1.2.tar.gz#md5=6b0a876f0778084e97935a951ea96ded',
         'https://github.com/hit9/toml.py/zipball/master#egg=toml.py-0.1.2',
         # 'https://github.com/sramana/pyatom/archive/master.zip#egg=pyatom-1.3',
-    ]
+    ],
 )

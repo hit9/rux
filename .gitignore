@@ -9,3 +9,4 @@ build
 rux.egg*
 dist
 docs/_build
+*.so

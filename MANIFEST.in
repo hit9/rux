@@ -1,5 +1,7 @@
 include LICENSE-BSD README.md requirements.txt
 recursive-include rux/res *
+recursive-include rux/csrc *.c
+recursive-include rux/csrc *.so
 recursive-exclude rux .*.swp
 recursive-exclude rux .*.swo
 recursive-exclude venv *
