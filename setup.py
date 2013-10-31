@@ -33,5 +33,5 @@ setup(
         'https://github.com/hit9/toml.py/zipball/master#egg=toml.py-0.1.2',
         # 'https://github.com/sramana/pyatom/archive/master.zip#egg=pyatom-1.3',
     ],
-    ext_modules=[Extension('ruxlibparser', ['rux/csrc/libparser.c'])],
+    ext_modules=[Extension('ruxlibparser', ['src/libparser.c'])],
 )
