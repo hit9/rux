@@ -1,20 +1,21 @@
+# coding=utf8
+
+'''
+Setup script for rux with the ugly setuptools.
+'''
+
+
 import os
-from setuptools import setup
+from setuptools import setup, Extension
 from rux import __version__
 
-dir_pth = os.path.dirname(__file__)
-
-out_so = os.path.join(dir_pth, 'rux', 'csrc', 'libparser.so')
-src_c = os.path.join(dir_pth, 'rux', 'csrc', 'libparser.c')
-os.system("gcc -fPIC -shared -o " + out_so + " " + src_c)
 
 setup(
     name='rux',
     version=__version__,
     author='hit9',
     author_email='nz2324@126.com',
-    description='''A simple, micro and lightweight static site generator,
-    built for mini needs personal blog.''',
+    description='''Micro and fast static blog generator designed only for writing''',
     license='BSD',
     keywords='static blog generator, markdown, html',
     url='http://github.com/hit9/rux',
@@ -32,4 +33,5 @@ setup(
         'https://github.com/hit9/toml.py/zipball/master#egg=toml.py-0.1.2',
         # 'https://github.com/sramana/pyatom/archive/master.zip#egg=pyatom-1.3',
     ],
+    ext_modules=[Extension('ruxlibparser', ['rux/csrc/libparser.c'])],
 )

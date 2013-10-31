@@ -9,8 +9,11 @@
 
 import os
 from ctypes import *
+from distutils.sysconfig import get_python_lib
 
-dll_path = os.path.join(os.path.dirname(__file__), 'csrc', 'libparser.so')
+
+dll_path = os.path.join(get_python_lib(), 'ruxlibparser.so')
+
 libparser = CDLL(dll_path)
 
 
