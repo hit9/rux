@@ -24,6 +24,8 @@ from pygments.util import ClassNotFound
 
 src_ext_len = len(src_ext)  # cache this, call only once
 
+to_unicode = lambda string: string.decode(charset)
+
 
 class RuxHtmlRenderer(HtmlRenderer, SmartyPants):
     """misaka render with color codes feature"""
@@ -92,9 +94,8 @@ class Parser(object):
             raise PostTitleNotFound
 
         # change to unicode
-        title, title_pic, markdown = map(lambda x: x.decode(charset), (
-            title, title_pic, markdown
-        ))
+        title, title_pic, markdown = map(to_unicode, (title, title_pic,
+                                                      markdown))
 
         # render to html
         html = self.markdown.render(markdown)
@@ -107,23 +108,6 @@ class Parser(object):
             'summary': summary,
             'title_pic': title_pic
         }
-
-    def split(self, source):
-        """split head and body, return tuple(head, body)"""
-        lines = source.splitlines()
-        l = None
-
-        for lineno, line in enumerate(lines):
-            if self.separator in line:
-                l = lineno
-                break
-
-        if not l:
-            raise SeparatorNotFound
-
-        head, body = "\n".join(lines[:l]), "\n".join(lines[l+1:])
-
-        return head, body
 
     def parse_filename(self, filepath):
         """parse post source files name to datetime object"""

@@ -7,6 +7,8 @@ latest version: v0.5.3
 
 **Note**: rux may not be stable before v1.0 release.
 
+![](screen-shots/rux-in-shell.png)
+
 Demo Site
 ----------
 
