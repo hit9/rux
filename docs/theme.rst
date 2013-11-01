@@ -5,8 +5,8 @@ Theme
 
 .. Contents::
 
-Use Theme
----------
+Use A Theme
+-----------
 
 Set this item in `config.toml`::
 

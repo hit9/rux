@@ -13,6 +13,8 @@ Rux is a lightweight and very fast blog generator, which build markdown to html.
 
 Release v\ |version|. (:ref:`Installation <install>`)
 
+.. image:: screen-shots/rux-in-shell.png
+
 Features
 --------
 
@@ -43,3 +45,4 @@ Contents
    quickstart
    post
    theme
+   commands
