@@ -69,11 +69,6 @@ class SeparatorNotFound(ParseException):
     pass
 
 
-class PostHeadSyntaxError(ParseException):
-    """Syntax error in post header part"""
-    pass
-
-
-class PostTitleNotFound(PostHeadSyntaxError):
+class PostTitleNotFound(ParseException):
     """There was no title found in post's source"""
     pass

@@ -68,3 +68,13 @@ And, Rux will automatically buil blog each time you save.
 To stop Rux's server::
 
     $ rux stop
+
+
+Logging Message
+---------------
+
+If you want to see the logging messages of rux, use ``rux serve`` or ``rux
+build`` instead of silent ``rux start``.
+
+``rux build`` just tell Rux to build once, ``rux serve`` will run the http
+server and the watcher.

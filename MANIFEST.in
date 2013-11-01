@@ -1,4 +1,4 @@
-include LICENSE-BSD README.md requirements.txt
+include LICENSE-BSD README.md requirements.txt src/libparser.c
 recursive-include rux/res *
 recursive-exclude rux .*.swp
 recursive-exclude rux .*.swo

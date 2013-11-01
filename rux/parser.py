@@ -12,6 +12,7 @@ import os
 
 from . import charset, src_ext
 from .exceptions import *
+import libparser
 
 import houdini
 import misaka
@@ -22,6 +23,8 @@ from pygments.formatters import HtmlFormatter
 from pygments.util import ClassNotFound
 
 src_ext_len = len(src_ext)  # cache this, call only once
+
+to_unicode = lambda string: string.decode(charset)
 
 
 class RuxHtmlRenderer(HtmlRenderer, SmartyPants):
@@ -81,23 +84,18 @@ class Parser(object):
         return self.markdown.render(markdown)
 
     def parse(self, source):
-        """Parse unicode post source, return dict"""
+        """Parse ascii post source, return dict"""
 
-        head, markdown = self.split(source)
+        rt, title, title_pic, markdown = libparser.parse(source)
 
-        # parse title, pic title from source
-        lines = filter(lambda x: x and not x.isspace(), head.splitlines())
-
-        if not lines:
+        if rt == -1:
+            raise SeparatorNotFound
+        elif rt == -2:
             raise PostTitleNotFound
 
-        title = lines[0]
-
-        title_pic = ''
-        if len(lines) == 2:
-            title_pic = lines[1]
-        elif len(lines) > 2:  # too many no-space lines
-            raise PostHeadSyntaxError
+        # change to unicode
+        title, title_pic, markdown = map(to_unicode, (title, title_pic,
+                                                      markdown))
 
         # render to html
         html = self.markdown.render(markdown)
@@ -110,23 +108,6 @@ class Parser(object):
             'summary': summary,
             'title_pic': title_pic
         }
-
-    def split(self, source):
-        """split head and body, return tuple(head, body)"""
-        lines = source.splitlines()
-        l = None
-
-        for lineno, line in enumerate(lines):
-            if self.separator in line:
-                l = lineno
-                break
-
-        if not l:
-            raise SeparatorNotFound
-
-        head, body = "\n".join(lines[:l]), "\n".join(lines[l+1:])
-
-        return head, body
 
     def parse_filename(self, filepath):
         """parse post source files name to datetime object"""

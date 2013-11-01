@@ -11,15 +11,14 @@
     Rux
     ~~~
 
-    A simple, micro and lightweight static site generator, built for mini
-    needs personal blog.
+    Micro and fast static site generator designed only for writing.
 
     :author: hit9
     :email: nz2324[at]126.com
     :license: BSD
 """
 
-__version__ = '0.5.1'
+__version__ = '0.5.3'
 
 """global vars"""
 charset = 'utf8'  # utf8 input & output

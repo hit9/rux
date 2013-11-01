@@ -44,7 +44,8 @@ class Renderer(object):
     def render_to(self, path, template, **data):
         """Render data with template and then write to path"""
         html = self.render(template, **data)
-        return open(path, "w").write(html.encode(charset))
+        with open(path, "w") as f:
+            f.write(html.encode(charset))
 
 
 renderer = Renderer()  # initialized a renderer, and use it each time
