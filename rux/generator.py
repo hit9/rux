@@ -52,7 +52,7 @@ class Generator(object):
     Build objects at first, and fill in them with data(file contents) one
     by one.
     """
-    POSTS_COUNT_EACH_PAGE = 9  # each page has 9 posts at most
+    POSTS_COUNT_EACH_PAGE = 15  # each page has 9 posts at most
     BUILDER_PROCESS_COUNT = 4  # at most 4 processes to build posts
 
     def __init__(self):
