@@ -118,11 +118,5 @@ class Parser(object):
             raise PostNameInvalid
         return {'name': name, 'datetime': dt, 'filepath': filepath}
 
-    def parse_file(self, filepath):
-        """parse post from file"""
-        data = self.parse(open(filepath).read().decode(charset))
-        data.update(self.parse_filename(filepath))
-        return data
-
 
 parser = Parser()  # build a runtime parser
