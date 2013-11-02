@@ -132,7 +132,7 @@ class Generator(object):
         for page in pages:
             for post in page.posts:
                 # read and parse file content
-                with open(post.filepath) as f:
+                with open(post.filepath, 'r') as f:
                     content = f.read()
                 try:
                     data = parser.parse(content)
