@@ -52,7 +52,7 @@ class Generator(object):
     Build objects at first, and fill in them with data(file contents) one
     by one.
     """
-    POSTS_COUNT_EACH_PAGE = 15  # each page has 9 posts at most
+    POSTS_COUNT_EACH_PAGE = 15  # each page has 15 posts at most
     BUILDER_PROCESS_COUNT = 4  # at most 4 processes to build posts
 
     def __init__(self):
@@ -89,7 +89,7 @@ class Generator(object):
 
     def get_pages(self):
         """Sort source files by its created time, and then chunk all posts into
-        9 pages"""
+        15 pages"""
 
         if not exists(Post.src_dir):
             logger.error(SourceDirectoryNotFound.__doc__)
@@ -112,7 +112,7 @@ class Generator(object):
         posts.sort(key=lambda post: post.datetime.timetuple(),
                         reverse=True)
 
-        # each page has 9 posts
+        # each page has 15 posts
         groups = chunks(posts, self.POSTS_COUNT_EACH_PAGE)
         pages = [Page(number=idx, posts=list(group))
                  for idx, group in enumerate(groups, 1)]
