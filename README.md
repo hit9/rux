@@ -5,6 +5,8 @@ Micro and fast static blog generator designed **only for writing**.
 
 latest version: v0.5.4
 
+**0.5.4 is not a stable version, I will update it later.. :)**
+
 **Note**: rux may not be stable before v1.0 release.
 
 ![](docs/screen-shots/rux-in-shell.png)
