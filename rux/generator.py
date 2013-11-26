@@ -112,6 +112,20 @@ class Generator(object):
         posts.sort(key=lambda post: post.datetime.timetuple(),
                         reverse=True)
 
+        # set next and prev attributes for each post
+        length = len(posts)
+
+        for idx, post in enumerate(posts):
+            if idx == 0:
+                setattr(post, 'prev', None)
+            else:
+                setattr(post, 'prev', posts[idx-1])
+            if idx == length - 1:
+                setattr(post, 'next', None)
+            else:
+                setattr(post, 'next', posts[idx+1])
+
+
         # each page has 15 posts
         groups = chunks(posts, self.POSTS_COUNT_EACH_PAGE)
         pages = [Page(number=idx, posts=list(group))
