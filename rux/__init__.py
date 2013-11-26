@@ -18,7 +18,7 @@
     :license: BSD
 """
 
-__version__ = '0.5.3'
+__version__ = '0.5.4'
 
 """global vars"""
 charset = 'utf8'  # utf8 input & output
