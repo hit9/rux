@@ -8,10 +8,12 @@
 """
 
 from datetime import datetime
+import gc
 import multiprocessing
 from os import listdir as ls
 from os.path import exists
 import sys
+import time
 
 from . import src_ext
 from .config import config
@@ -31,6 +33,31 @@ def render_to(path, template, **data):
     except JinjaTemplateNotFound as e:
         logger.error(e.__doc__ + 'Template: %r' % template)
         sys.exit(e.exit_code)
+
+
+def parse_post(post):
+    """woker function for pool. to parse single post"""
+
+    with open(post.filepath, 'r') as f:
+        content = f.read()
+
+    try:
+        data = parser.parse(content)
+    except ParseException, e:
+        logger.warn(e.__doc__ + ', filepath %r' % post.filepath)
+        pass  # skip
+    else:
+        post.__dict__.update(data)  # set attributes: html, markdown
+
+    return post
+
+
+def render_page(page):
+    """woker function for pool. to render single page and posts inside it"""
+
+    for post in page.posts:
+        render_to(post.out, Post.template, post=post)
+    render_to(page.out, Page.template, page=page)
 
 
 class Generator(object):
@@ -73,7 +100,7 @@ class Generator(object):
         self.author.__dict__.update(self.config['author'])
 
         # initialize jinja2
-        templates = join(self.blog.name, 'templates')  # templates directory path
+        templates = join(self.blog.theme, 'templates')  # templates directory path
         # set a renderer
         jinja2_global_data = {
             'blog': self.blog,
@@ -102,6 +129,10 @@ class Generator(object):
             else:
                 posts.append(Post(**data))
 
+        return posts
+
+    def deal_posts(self, posts):
+
         # sort posts by its created time, from new to old
         posts.sort(key=lambda post: post.datetime.timetuple(), reverse=True)
 
@@ -111,27 +142,73 @@ class Generator(object):
         for idx, post in enumerate(posts):
 
             if idx == 0 :
-                setattr(post, 'prev', None)
-            else:
-                setattr(post, 'prev', posts[idx-1])
-
-            if idx == length - 1:
                 setattr(post, 'next', None)
             else:
-                setattr(post, 'next', posts[idx+1])
+                setattr(post, 'next', posts[idx-1])
+
+            if idx == length - 1:
+                setattr(post, 'prev', None)
+            else:
+                setattr(post, 'prev', posts[idx+1])
 
         return posts
 
+    def get_pages(self, posts):
+        groups = chunks(posts, self.POSTS_COUNT_EACH_PAGE)
+        pages = [Page(number=idx, posts=list(group)) for idx, group in enumerate(groups, 1)]
 
-    def parse_posts(self, posts):
-        for post in posts:
-            with open(post.filepath, 'r') as f:
-                content = f.read()
+        if pages:
+            pages[0].first = True
+            pages[-1].last = True
 
-            try:
-                data = parser.parse(content)
-            except ParseException, e:
-                logger.warn(e.__doc__ + ', filepath %r' % post.filepath)
-                pass  # skip
-            else:
-                post.__dict__.update(data)  # set attributes: html, markdown
+        return pages
+
+
+    def generate(self):
+        start_time = time.time()
+
+        # -----------------  {{initialization
+        self.initialize()
+        n = self.BUILDER_PROCESS_COUNT
+        # ---------------}}
+
+        # -----------------  {{ parsing
+        posts = self.get_posts()
+        pool = multiprocessing.Pool(n)
+        pool.apply(parse_post, args=posts)  # parse posts
+
+        # ----------------------------- }}
+
+        # deal with posts
+        self.deal_posts(posts)
+
+        # -----------------  {{ rendering
+        pages = self.get_pages(posts)
+        # if `post/` or `page/` not exist, mkdir
+        mkdir_p(Post.out_dir)
+        mkdir_p(Page.out_dir)
+
+        pool.map(render_page, pages)
+
+        # ----------------------------- }}
+
+        pool.close()
+        pool.join()
+
+        # cleanup memory
+        del posts[:]
+        del posts
+        del pages[:]
+        del pages
+
+        logger.success("Build done with %d process in %.3f seconds" % (
+            n, time.time() - start_time))
+
+    def re_generate(self):
+        self.reset()
+        self.generate()
+        # gc
+        gc.collect()
+
+
+generator = Generator()
