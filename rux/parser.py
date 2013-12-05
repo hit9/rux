@@ -66,8 +66,6 @@ class Parser(object):
 
     """
 
-    separator = '---'
-
     def __init__(self):
         """Initialize the parser, set markdown render handler as
         an attribute `markdown` of the parser"""
