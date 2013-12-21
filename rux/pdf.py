@@ -1,67 +1,67 @@
 # coding=utf8
 
 """
-    rux.generator
-    ~~~~~~~~~~~~~
+    rux.pdf
+    ~~~~~~~
 
-    The core builder processor.
+    Generate PDF using wkhtmltopdf.
 """
 
-from datetime import datetime
-import gc
-from os import listdir as ls
-from os.path import exists
 import sys
 import time
+import subprocess
+import os
+from os import listdir as ls
+from os.path import exists
 
-from . import src_ext
+from . import src_ext, charset
 from .config import config
 from .exceptions import *
-from .logger import logger
-from .models import blog, author, Post, Page
 from .parser import parser
 from .renderer import renderer
-from .utils import chunks, update_nested_dict, mkdir_p, join
+from .logger import logger
+from .models import blog, author, Post
+from .utils import update_nested_dict, join
 
 
-def render_to(path, template, **data):
-    """shortcut to render data with `template` and then write to `path`.
-    Just add exception catch to `renderer.render_to`"""
+def render(template, **data):
+    """shortcut to render data with `template`. Just add exception
+    catch to `renderer.render`"""
     try:
-        renderer.render_to(path, template, **data)
+        return renderer.render(template, **data)
     except JinjaTemplateNotFound as e:
         logger.error(e.__doc__ + ', Template: %r' % template)
         sys.exit(e.exit_code)
 
 
-class Generator(object):
-
-    POSTS_COUNT_EACH_PAGE = 15
+class PDFGenerator(object):
 
     def __init__(self):
-        self.reset()
-
-    def reset(self):
+        self.commands = ['wkhtmltopdf',
+                         '-',
+                         # '--quiet',  # Be less verbose
+                         '--page-size',  # Set paper size to: A4
+                         'A4',
+                         '--outline',
+                         '--outline-depth',  # Set the depth of the outline
+                         '2',]
         self.config = config.default
-        self.author = author
         self.blog = blog
+        self.author = author
         self.posts = []
-        self.pages = []
-
-        gc.collect()
+        self.html = None
 
     def initialize(self):
-        """Initialize configuration and renderer environment"""
 
-        # read configuration
+        # read config
         try:
             conf = config.parse()
         except ConfigSyntaxError as e:
             logger.error(e.__doc__)
             sys.exit(e.exit_code)
 
-        # update default configuration with user defined
         update_nested_dict(self.config, conf)
+
         self.blog.__dict__.update(self.config['blog'])
         self.author.__dict__.update(self.config['author'])
 
@@ -74,10 +74,10 @@ class Generator(object):
             'config': self.config
         }
         renderer.initialize(templates, jinja2_global_data)
+
         logger.success('Initialized')
 
     def get_posts(self):
-
         if not exists(Post.src_dir):
             logger.error(SourceDirectoryNotFound.__doc__)
             sys.exit(SourceDirectoryNotFound.exit_code)
@@ -93,31 +93,12 @@ class Generator(object):
             else:
                 self.posts.append(Post(**data))
 
-
         # sort posts by its created time, from new to old
         self.posts.sort(key=lambda post: post.datetime.timetuple(), reverse=True)
-
-        count = len(self.posts)
-
-        for idx, post in enumerate(self.posts):
-
-            if idx == 0:
-                _next = None
-            else:
-                _next = self.posts[idx-1]
-
-            if idx == count - 1:
-                _prev = None
-            else:
-                _prev = self.posts[idx+1]
-
-            setattr(post, 'next', _next)
-            setattr(post, 'prev', _prev)
 
     def parse_posts(self):
 
         for post in self.posts:
-
             with open(post.filepath, 'r') as file:
                 content = file.read()
 
@@ -128,40 +109,27 @@ class Generator(object):
                 pass
             else:
                 post.__dict__.update(data)
-
-    def get_pages(self):
-
-        groups = chunks(self.posts, self.POSTS_COUNT_EACH_PAGE)
-        self.pages = [Page(number=idx, posts=list(group))
-                      for idx, group in enumerate(groups, 1)]
-
-        if self.pages:
-            self.pages[0].first = True
-            self.pages[-1].last = True
+        logger.success('Posts parsed')
 
     def render(self):
-
-        mkdir_p(Post.out_dir)
-        mkdir_p(Page.out_dir)
-
-        for page in self.pages:
-            for post in page.posts:
-                render_to(post.out, Post.template, post=post)
-            render_to(page.out, Page.template, page=page)
+        self.html = render('pdf.html', posts=self.posts, BLOG_ABS_PATH=os.getcwd())
+        logger.success('Posts rendered')
 
     def generate(self):
         start_time = time.time()
         self.initialize()
         self.get_posts()
-        self.get_pages()
         self.parse_posts()
         self.render()
 
-        logger.success("Build done in %.3f seconds" % (time.time() - start_time))
+        out = self.blog.name.encode(charset) + '.pdf'
 
-    def re_generate(self):
-        self.reset()
-        self.generate()
+        logger.info('Generate pdf with wkhtmltopdf:')
+        self.commands.append(out)   # append output path
+        proc = subprocess.Popen(self.commands, stdin=subprocess.PIPE,
+                                stdout=sys.stdout, stderr=sys.stderr)
+        stdout, stderr = proc.communicate(input=self.html.encode(charset))
+        logger.success('Generated to %s in %.3f seconds' % (out, time.time() - start_time))
 
 
-generator = Generator()
+pdf_generator = PDFGenerator()
