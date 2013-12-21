@@ -25,3 +25,4 @@ All available commands are here::
       stop              stop builder daemon
       status            report builder daemon status
       restart           restart builder daemon
+      pdf               generate pdf from posts
