@@ -13,7 +13,7 @@ Once you have Rux installed, deploy a new blog::
     $ cd myblog
     $ rux deploy
 
-You can run ``ls`` to see what has happened.
+You can run ``ls`` to see what has been created.
 
 
 Configure 
@@ -42,7 +42,7 @@ Configuration is simple::
 Start blogging
 --------------
 
-First, start Rux's server(include a http server and a files watcher)::
+First, start Rux's server(which includes a http server and a file monitor)::
 
     $ rux start
 
@@ -78,3 +78,17 @@ build`` instead of silent ``rux start``.
 
 ``rux build`` just tell Rux to build once, ``rux serve`` will run the http
 server and the watcher.
+
+Generate PDF
+------------
+
+This feature requires ``wkhtmltopdf``, on Ubuntu, we can install it using
+``apt-get``::
+
+    $ sudo apt-get install wkhtmltopdf
+
+The following command will generate PDF in blog's root directory:
+
+::
+
+    $ rux pdf

@@ -3,7 +3,7 @@ Rux
 
 Micro and fast static blog generator designed **only for writing**.
 
-latest version: v0.5.5
+latest version: v0.5.6
 
 **Note**: rux may not be stable before v1.0 release.
 

@@ -6,14 +6,14 @@
 Rux
 ===
 
-What is
--------
-
-Rux is a lightweight and fast static blog generator, which build markdown to html.
-
 Release v\ |version|. (:ref:`Installation <install>`)
 
 .. image:: screen-shots/rux-in-shell.png
+
+About
+-----
+
+Rux is a micro and fast static blog generator, which build Markdown to HTML & PDF.
 
 Features
 --------
@@ -27,6 +27,8 @@ Features
 - Run in background as a daemon
 
 - Automatically build once source changes
+
+- Ability to save posts in PDF for offline reading
 
 - ...
 

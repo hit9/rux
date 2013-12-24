@@ -17,6 +17,7 @@ from . import src_ext
 from .daemon import rux_daemon
 from .exceptions import SourceDirectoryNotFound
 from .generator import generator
+from .pdf import pdf_generator
 from .logger import logger
 from .models import Post
 from .server import server
@@ -30,6 +31,7 @@ usage = """Usage:
   rux post
   rux (deploy|build|clean|serve)
   rux (start|stop|status|restart)
+  rux pdf
 
 Options:
   -h --help         show help
@@ -44,7 +46,8 @@ Commands:
   start             start builder daemon
   stop              stop builder daemon
   status            report builder daemon status
-  restart           restart builder daemon"""
+  restart           restart builder daemon
+  pdf               generate pdf from posts"""
 
 
 def deploy_blog():
@@ -110,6 +113,8 @@ def main():
         rux_daemon.status()
     elif arguments['restart']:
         rux_daemon.restart()
+    elif arguments['pdf']:
+        pdf_generator.generate()
     else:
         exit(usage)
 
