@@ -18,9 +18,8 @@
     :license: BSD
 """
 
-__version__ = '0.5.6'
+__version__ = '0.5.7'
 
-"""global vars"""
 charset = 'utf8'  # utf8 input & output
 src_ext = '.md'
 out_ext = '.html'

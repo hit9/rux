@@ -1,4 +1,4 @@
-.. _post::
+.. _post:
 
 Post Syntax
 ===========
@@ -11,7 +11,7 @@ Post Syntax
 
 - Post's filename extension must be ``.md``
 
-Of course, you just need to run ``rux post`` to touch a new post.
+Just run ``rux post`` to touch a new post.
 
 Post Syntax
 -----------
@@ -27,4 +27,4 @@ Sample post::
 
 A post is separate into head and body by ``---``.
 
-Head include title (required) and title picture (optional), body is in markdown.
+Head includes title (required) and title picture (optional), body is in markdown.
