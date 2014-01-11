@@ -25,6 +25,6 @@ Sample post::
     **Markdown content..**
 
 
-A post is separate into head and body by ``---``.
+A post is separated into head and body by ``---``.
 
 Head includes title (required) and title picture (optional), body is in markdown.

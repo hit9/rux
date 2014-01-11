@@ -42,8 +42,8 @@ $ pip install rux
 Demo
 ----
 
-- Site: http://rux.hit9.org
-- Code: https://github.com/hit9/rux/tree/gh-pages
+- Site: http://love.hit9.org
+- Code: https://github.com/hit9/v.git
 
 Sample Post
 ------------
@@ -57,7 +57,7 @@ http://titlepic.jpg
 **Hello World**
 ```
 
-A post is separate into head and body by ``---``.
+A post is separated into head and body by ``---``.
 
 Head includes title (required) and title picture (optional), body is in markdown.
 
