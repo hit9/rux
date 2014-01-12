@@ -6,11 +6,12 @@
 
     rux's commandline interface.
 """
+
+import sys
 import datetime
 import logging
-from os.path import dirname, exists
 from subprocess import call
-import sys
+from os.path import dirname, exists
 
 from . import __version__
 from . import src_ext
@@ -38,29 +39,32 @@ Options:
   -v --version      show version
 
 Commands:
-  post              create an empty new post
-  deploy            deploy new blog in current directory
-  build             build source files to html
-  serve             start rux server
-  clean             clean built htmls
-  start             start builder daemon
-  stop              stop builder daemon
-  status            report builder daemon status
-  restart           restart builder daemon
-  pdf               generate pdf from posts"""
+  post              create a new post
+  deploy            create new blog in current directory
+  build             build source files to htmls
+  serve             start a HTTP server and watch source changes
+  clean             remove all htmls rux built
+  start             start http server and rebuilder in the background
+  stop              stop http server and rebuilder daemon
+  status            report the daemon's status
+  restart           restart the daemon
+  pdf               generate all posts to PDF
+
+Go to http://rux.readthedocs.org/ for more help.
+"""
 
 
 def deploy_blog():
-    """deploy blog to current directory"""
+    """Deploy new blog to current directory"""
     logger.info(deploy_blog.__doc__)
     # `rsync -aqu path/to/res/* .`
     call('rsync -aqu ' + join(dirname(__file__), 'res', '*') + ' .', shell=True)
-    logger.success('deploy done')
+    logger.success('Done')
     logger.info('Please edit config.toml to meet your needs')
 
 
 def new_post():
-    """touch an empty new post to src/"""
+    """Touch a new post in src/"""
     logger.info(new_post.__doc__)
     # make the new post's filename
     now = datetime.datetime.now()
@@ -80,15 +84,15 @@ def new_post():
     f = open(filepath, 'w')
     f.write(content)
     f.close()
-    logger.success('new post created: %s' % filepath)
+    logger.success('New post created: %s' % filepath)
 
 
 def clean():
-    """clean: rm -rf post page index.html"""
+    """Clean htmls rux built: `rm -rf post page index.html`"""
     logger.info(clean.__doc__)
     paths = ['post', 'page', 'index.html']
     call(['rm', '-rf'] + paths)
-    logger.success('clean done')
+    logger.success('Done')
 
 
 def main():

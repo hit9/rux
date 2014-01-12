@@ -37,7 +37,6 @@ class Config(object):
             'enable': True,
             'shortname': 'rux'
         },
-        'links': {}
     }
 
     def parse(self):

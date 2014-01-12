@@ -88,8 +88,7 @@ class Daemon(object):
         signal.signal(signal.SIGINT, sigtermhandler)
 
         if self.verbose >= 1:
-            logger.success("Started. Web server is listening at 0.0.0.0:8888, "
-                           "rux will automatically build once source changed")
+            logger.success("Started, execute `rux stop` to shutdown this daemon.")
 
         # Write pidfile
         atexit.register(self.delpid)  # Make sure pid file is removed if we \
@@ -106,7 +105,7 @@ class Daemon(object):
         """
 
         if self.verbose >= 1:
-            logger.info("Start builder daemon...")
+            logger.info("Start HTTP server at 0.0.0.0 on port 8888 and watch source files changes..")
 
         # Check for a pidfile to see if the daemon already runs
         try:
@@ -133,7 +132,7 @@ class Daemon(object):
         """
 
         if self.verbose >= 1:
-            logger.info("Stop builder daemon...")
+            logger.info("Stop the daemon...")
 
         # Get the pid from the pidfile
         try:
@@ -175,7 +174,7 @@ class Daemon(object):
                 sys.exit(1)
 
         if self.verbose >= 1:
-            logger.success("Stopped")
+            logger.success("Stopped.")
 
     def restart(self):
         """
@@ -196,7 +195,7 @@ class Daemon(object):
             pid = None
 
         if pid:
-            logger.info("Running")
+            logger.info("Running: HTTP server at 0.0.0.0:8888.")
         else:
             logger.info("Stopped")
 
