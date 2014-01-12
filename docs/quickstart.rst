@@ -5,90 +5,118 @@ Quick Start
 
 .. Contents::
 
-Deploy
-------
+This section assumes that you have ``rux`` installed.
 
-Once you have Rux installed, deploy a new blog::
+New Blog
+--------
 
-    $ cd myblog
+Create a new directory::
+
+    $ mkdir myblog && cd myblog
+
+If you installed ``rux`` via virtualenv, activate the environment::
+
+    $ . path/to/venv/bin/activate
+
+Run ``rux deploy`` inside the empty directory::
+
     $ rux deploy
 
-You can run ``ls`` to see what has been created.
+
+Let's see what was created::
+
+    $ ls
+    config.toml default/ src/
 
 
-Configure 
----------
+- ``config.toml`` - the configuration file
 
-Edit the configuration that rux generated::
+- ``default`` - the built-in theme
 
-    $ vim config.toml
+-  ``src/`` - the directory of source.
 
-Configuration is simple::
+We can now run ``rux serve`` to serve this site up, and preview it at ``http://localhost:8888`` in
+web browser.
+
+Configuration
+-------------
+
+Configuration in ``config.toml`` is simple and obvious::
 
     [blog]
     name = "Sunshine Every Day"
     description = "Never give up, my determination is to chase for success"
-    theme = "default"
+    theme = "default"  # path to theme
     
     [author]
     name = "Hit9"
     email = "nz2324@126.com"
     description = "I am a happy boy."
+    url = "http://hit9.org"  # author's index url
     
     [disqus]
     enable = true  # enable comment? true or false
-    shortname = "rux"
+    shortname = "rux"  # shortname from disqus.com
 
-Start blogging
---------------
+Build Site
+----------
 
-First, start Rux's server(which includes a http server and a file monitor)::
+To build site::
+
+    $ rux build
+
+To start server(including a http server and a file monitor)::
+
+    $ rux serve
+
+To serve in the background(no logging output)::
 
     $ rux start
 
-You can now see your site at ``http://localhost:8888`` in your web browser.
 
-Now new a post::
+New Post
+--------
+
+To new a post::
 
     $ rux post
 
-Rux will feedback you the filepath of the new post, edit it.
+rux will feedback new-created file's path, edit it::
 
-A post is made up of head and body, head include ``title`` and ``title_pic``
-(optional), body is in markdown::
-
-    I am the title
-    I am the url of title picture 
+    Title
+    Title Picture URL
     ---
-    
-    Markdown content...
-
-And, Rux will automatically buil blog each time you save.
-
-To stop Rux's server::
-
-    $ rux stop
+    Markdown content ..
 
 
-Logging Message
----------------
+The header includes ``title`` and an optional ``title_pic``, the body is in
+markdown.
 
-If you want to see the logging messages of rux, use ``rux serve`` or ``rux
-build`` instead of silent ``rux start``.
+Writing Steps
+-------------
 
-``rux build`` just tell Rux to build once, ``rux serve`` will run the http
-server and the watcher.
+Writing with rux is easy::
 
-Generate PDF
-------------
+1. activate the environment if you install rux via virtualenv
 
-This feature requires ``wkhtmltopdf``, on Ubuntu, we can install it using
-``apt-get``::
+2. start rux daemon: ``rux start``
 
-    $ sudo apt-get install wkhtmltopdf
+3. create a new post: ``rux post``
 
-The following command will generate PDF in blog's root directory:
+4. edit the post and save.
 
-::
+5. preview site in browser.
 
-    $ rux pdf
+
+What's Next
+-----------
+
+See also:
+
+- :ref:`post`
+
+- :ref:`use_a_theme`
+
+- :ref:`commands`
+
+- :ref:`pdf`

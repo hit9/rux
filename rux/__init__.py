@@ -11,16 +11,14 @@
     Rux
     ~~~
 
-    Micro and fast static site generator designed only for writing.
+    Micro & Fast static blog generator (markdown => html).
 
-    :author: hit9
-    :email: nz2324[at]126.com
+    :author: Chao Wang (Hit9)
     :license: BSD
 """
 
-__version__ = '0.5.6'
+__version__ = '0.5.7'
 
-"""global vars"""
 charset = 'utf8'  # utf8 input & output
 src_ext = '.md'
 out_ext = '.html'

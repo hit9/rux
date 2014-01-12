@@ -1,14 +1,14 @@
 [blog]
 name = "Sunshine Every Day"
 description = "Never give up, my determination is to chase for success"
-theme = "default"
+theme = "default"  # path to theme
 
 [author]
 name = "Hit9"
 email = "nz2324@126.com"
 description = "I am a happy boy."
-url = "http://hit9.org"
+url = "http://hit9.org"  # author's index url
 
 [disqus]
 enable = true  # enable comment? true or false
-shortname = "rux"
+shortname = "rux"  # shortname from disqus.com

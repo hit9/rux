@@ -10,6 +10,7 @@ All available commands are here::
       rux post
       rux (deploy|build|clean|serve)
       rux (start|stop|status|restart)
+      rux pdf
     
     Options:
       -h --help         show help

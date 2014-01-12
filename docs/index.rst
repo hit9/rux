@@ -6,42 +6,41 @@
 Rux
 ===
 
-Release v\ |version|. (:ref:`Installation <install>`)
+Micro & Fast static blog generator (markdown => html).
 
 .. image:: screen-shots/rux-in-shell.png
 
-About
------
+Latest version v\ |version|. (:ref:`Installation <install>`)
 
-Rux is a micro and fast static blog generator, which build Markdown to HTML & PDF.
 
 Features
 --------
 
-- Source in **Markdown**, no database
+- Static: Markdown => HTML
 
 - Not tags, No categories, No feed generation, No ...
 
-- Minimal configuration
+- Minimal & Simple configuration
 
-- Run in background as a daemon
-
-- Automatically build once source changes
+- Ability to run in the background as a daemon
 
 - Ability to save posts in PDF for offline reading
 
+- Ability to build automatically once source updated
+
 - ...
 
-Sample
-------
 
-Sample site is on GitHub Pages: https://github.com/hit9/v.git
+DEMO
+----
+
+DEMO site is on GitHub Pages: https://github.com/hit9/v.git
 
 Contents
 --------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    install
    quickstart
