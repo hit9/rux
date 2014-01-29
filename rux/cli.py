@@ -50,8 +50,7 @@ Commands:
   restart           restart the daemon
   pdf               generate all posts to PDF
 
-Go to http://rux.readthedocs.org/ for more help.
-"""
+Go to http://rux.readthedocs.org/ for more help."""
 
 
 def deploy_blog():
