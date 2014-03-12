@@ -10,6 +10,11 @@ install it via ``apt-get``::
 
     $ sudo apt-get install wkhtmltopdf
 
+os OSX::
+
+    $ brew tap homebrew/boneyard
+    $ brew install wkhtmltopdf
+
 To generate all posts to PDF::
 
     ~/myblog $ rux pdf

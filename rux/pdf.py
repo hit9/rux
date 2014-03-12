@@ -38,13 +38,7 @@ class PDFGenerator(object):
 
     def __init__(self):
         self.commands = ['wkhtmltopdf',
-                         '-',
-                         # '--quiet',  # Be less verbose
-                         '--page-size',  # Set paper size to: A4
-                         'A4',
-                         '--outline',
-                         '--outline-depth',  # Set the depth of the outline
-                         '2',]
+                         '-',]
         self.config = config.default
         self.blog = blog
         self.author = author
