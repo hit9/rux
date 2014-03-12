@@ -3,7 +3,7 @@ Rux
 
 Micro & Fast static blog generator (markdown => html).
 
-latest version: v0.5.7
+latest version: v0.5.8
 
 **Note**: rux may not be stable before v1.0 release.
 
@@ -143,6 +143,17 @@ Common Issues
 
   ```
   sudo apt-get install python-dev
+  ```
+
+2. How to generate PDF from my blog? You need to install `wkhtmltopdf` first:
+
+  ```
+  # Ubuntu
+  sudo apt-get install wkhtmltopdf
+
+  # on OSX
+  brew tap homebrew/boneyard
+  brew install wkhtmltopdf
   ```
 
 License
