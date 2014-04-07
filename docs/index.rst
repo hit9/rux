@@ -47,3 +47,4 @@ Contents
    post
    theme
    commands
+   pdf
