@@ -8,6 +8,7 @@
     daemon is modified from <david@boxedice.com>'s generic daemon class.
 """
 
+
 import atexit
 import logging
 import os
@@ -20,56 +21,41 @@ from .server import server
 
 
 class Daemon(object):
-    """
-    A generic daemon class.
 
-    Usage: subclass the Daemon class and override the run() method
-    """
     def __init__(self, pidfile, stdin=os.devnull, stdout=os.devnull,
-                 stderr=os.devnull, home_dir='.', umask=022, verbose=1):
+                 stderr=os.devnull, home_dir='.', umask=022):
+        self.pidfile = pidfile
         self.stdin = stdin
         self.stdout = stdout
         self.stderr = stderr
-        self.pidfile = pidfile
         self.home_dir = home_dir
-        self.verbose = verbose
         self.umask = umask
         self.daemon_alive = True
 
-    def daemonize(self):
-        """
-        Do the UNIX double-fork magic, see Stevens' "Advanced
-        Programming in the UNIX Environment" for details (ISBN 0201563177)
-        http://www.erlenstar.demon.co.uk/unix/faq_2.html#SEC16
-        """
+    def daemonize(self, server_port):
         try:
             pid = os.fork()
             if pid > 0:
-                # Exit first parent
                 sys.exit(0)
         except OSError, e:
             sys.stderr.write("fork #1 failed: %d (%s)\n" % (e.errno,
                                                             e.strerror))
             sys.exit(1)
 
-        # Decouple from parent environment
         os.chdir(self.home_dir)
         os.setsid()
         os.umask(self.umask)
 
-        # Do second fork
         try:
             pid = os.fork()
             if pid > 0:
-                # Exit from second parent
                 sys.exit(0)
         except OSError, e:
             sys.stderr.write("fork #2 failed: %d (%s)\n" % (e.errno,
                                                             e.strerror))
             sys.exit(1)
 
-        if sys.platform != 'darwin':  # This block breaks on OS X
-            # Redirect standard file descriptors
+        if sys.platform != 'darwin':
             sys.stdout.flush()
             sys.stderr.flush()
             si = file(self.stdin, 'r')
@@ -87,73 +73,55 @@ class Daemon(object):
         signal.signal(signal.SIGTERM, sigtermhandler)
         signal.signal(signal.SIGINT, sigtermhandler)
 
-        if self.verbose >= 1:
-            logger.success("Started, execute `rux stop` to shutdown this daemon.")
+        logger.success('Started')
 
         # Write pidfile
         atexit.register(self.delpid)  # Make sure pid file is removed if we \
                                       # quit
         pid = str(os.getpid())
-        file(self.pidfile, 'w+').write("%s\n" % pid)
+        file(self.pidfile, 'w+').write("%s:%s\n" % (pid, server_port))
 
     def delpid(self):
         os.remove(self.pidfile)
 
-    def start(self, *args, **kwargs):
-        """
-        Start the daemon
-        """
+    def start(self, server_port):
+        logger.info('Starting http server on port %d'
+                    ' and source files watcher..' % server_port)
 
-        if self.verbose >= 1:
-            logger.info("Start HTTP server at 0.0.0.0 on port 8888 and watch source files changes..")
-
-        # Check for a pidfile to see if the daemon already runs
         try:
             pf = file(self.pidfile, 'r')
-            pid = int(pf.read().strip())
+            pid, port = map(int, pf.read().strip().split(':'))
             pf.close()
-        except IOError:
-            pid = None
-        except SystemExit:
-            pid = None
+        except (IOError, SystemExit) as e:
+            pid, port = None, None
 
-        if pid:
-            message = "pidfile %s already exists. Is it already running?"
-            logger.warning(message % self.pidfile)
+        if pid and port:
+            message = ('pidfile %s already exists. Is it already running?'
+                       '(pid: %d, port: %d)')
+            logger.warning(message % (self.pidfile, pid, port))
             sys.exit(1)
 
-        # Start the daemon
-        self.daemonize()
-        self.run(*args, **kwargs)
+        self.daemonize(server_port)
+        self.run(server_port)
 
     def stop(self):
-        """
-        Stop the daemon
-        """
+        logger.info('Stopping the daemon..')
 
-        if self.verbose >= 1:
-            logger.info("Stop the daemon...")
-
-        # Get the pid from the pidfile
         try:
-            pf = file(self.pidfile, 'r')
-            pid = int(pf.read().strip())
+            pf = file(self.pidfile)
+            pid, port = map(int, pf.read().strip().split(':'))
             pf.close()
-        except IOError:
-            pid = None
-        except ValueError:
-            pid = None
+        except (IOError, ValueError) as e:
+            pid, port = None, None
 
-        if not pid:
-            message = "pidfile %s does not exist. Not running?"
+        if not (pid and port):
+            message = 'pidfile %s does not exist. Not running?'
             logger.warning(message % self.pidfile)
 
-            # Just to be sure. A ValueError might occur if the PID file is
-            # empty but does actually exist
             if os.path.exists(self.pidfile):
                 os.remove(self.pidfile)
 
-            return  # Not an error in a restart
+            return  # Not an error in a restart process
 
         # Try killing the daemon process
         try:
@@ -173,45 +141,26 @@ class Daemon(object):
                 logger.error(str(err))
                 sys.exit(1)
 
-        if self.verbose >= 1:
-            logger.success("Stopped.")
-
-    def restart(self):
-        """
-        Restart the daemon
-        """
-        self.stop()
-        self.start()
+        logger.success('Stopped.')
 
     def status(self):
-        """report daemon status"""
+
         try:
-            pf = file(self.pidfile, 'r')
-            pid = int(pf.read().strip())
+            pf = file(self.pidfile)
+            pid, port = map(int, pf.read().strip().split(':'))
             pf.close()
-        except IOError:
-            pid = None
-        except SystemExit:
-            pid = None
+        except (IOError, ValueError) as e:
+            pid, port = None, None
 
-        if pid:
-            logger.info("Running: HTTP server at 0.0.0.0:8888.")
+        if pid and port:
+            logger.info('Running: 0.0.0.0:%d, pid: %d.' % (port, pid))
         else:
-            logger.info("Stopped")
+            logger.info('Stopped.')
 
-    def run(self):
-        """
-        You should override this method when you subclass Daemon. It will be
-        called after the process has been daemonized by start() or restart().
-        """
-
-
-class RuxDaemon(Daemon):
-
-    def run(self):
+    def run(self, port):
         logger.setLevel(logging.ERROR)
-        server.run()
+        server.run(port)
         logger.setLevel(logging.INFO)
 
 
-rux_daemon = RuxDaemon("/tmp/rux-daemon.pid", stdout="/dev/stdout")
+daemon = Daemon("/tmp/rux-daemon.pid", stdout="/dev/stdout")

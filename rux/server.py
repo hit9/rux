@@ -6,7 +6,7 @@
 
     rux's server, include a web server and a watcher, running in two threads,
     the file watcher will watch source files updates and start building process
-    automatically, the http server host the static site at localhost:8888
+    automatically, the http server host the static site at 0.0.0.0:port
 """
 
 from BaseHTTPServer import BaseHTTPRequestHandler
@@ -53,8 +53,8 @@ class Server(object):
         self.watcher = Thread(target=self.watch_files)  # the thread of watcher
         self.watcher.daemon = True  # terminate watcher once main process ends
 
-    def run_server(self, port=8888):
-        """run a server binding to port(default: 8888)"""
+    def run_server(self, port):
+        """run a server binding to port"""
 
         try:
             self.server = MultiThreadedHTTPServer(('0.0.0.0', port), Handler)
@@ -123,7 +123,7 @@ class Server(object):
             logger.info("^C received, shutting down watcher")
             self.shutdown_watcher()
 
-    def run(self, port=8888):
+    def run(self, port):
         """start web server and watcher"""
         self.watcher.start()
         self.run_server(port)
