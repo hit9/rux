@@ -85,7 +85,7 @@ class Daemon(object):
         os.remove(self.pidfile)
 
     def start(self, server_port):
-        logger.info('Starting http server on port %d'
+        logger.info('Starting http server(0.0.0.0:%d)'
                     ' and source files watcher..' % server_port)
 
         try:
@@ -96,8 +96,7 @@ class Daemon(object):
             pid, port = None, None
 
         if pid and port:
-            message = ('pidfile %s already exists. Is it already running?'
-                       '(pid: %d, port: %d)')
+            message = ('pidfile %s already exists(pid: %d, port: %d). Is it already running?')
             logger.warning(message % (self.pidfile, pid, port))
             sys.exit(1)
 
