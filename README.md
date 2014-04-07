@@ -1,7 +1,7 @@
 Rux
 ===
 
-Micro but Fast static blog generator (markdown => html).
+Micro & Fast static blog generator (markdown => html).
 
 latest version: v0.5.9
 
