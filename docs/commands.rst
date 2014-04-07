@@ -8,8 +8,9 @@ All available commands are here::
     Usage:
       rux [-h|-v]
       rux post
-      rux (deploy|build|clean|serve)
-      rux (start|stop|status|restart)
+      rux (deploy|build|clean)
+      rux (serve|start) [<port>]
+      rux (stop|status)
       rux pdf
     
     Options:
@@ -17,13 +18,13 @@ All available commands are here::
       -v --version      show version
     
     Commands:
-      post              create an empty new post
-      deploy            deploy new blog in current directory
-      build             build source files to html
-      serve             start rux server
-      clean             clean built htmls
-      start             start builder daemon
-      stop              stop builder daemon
-      status            report builder daemon status
-      restart           restart builder daemon
-      pdf               generate pdf from posts
+      post              create a new post
+      deploy            create new blog in current directory
+      build             build source files to htmls
+      serve             start a HTTP server and watch source changes
+      clean             remove all htmls rux built
+      start             start http server and rebuilder in the background
+      stop              stop http server and rebuilder daemon
+      status            report the daemon's status
+      restart           restart the daemon
+      pdf               generate all posts to PDF
