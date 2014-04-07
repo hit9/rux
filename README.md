@@ -1,9 +1,9 @@
 Rux
 ===
 
-Micro & Fast static blog generator (markdown => html).
+Micro but Fast static blog generator (markdown => html).
 
-latest version: v0.5.8
+latest version: v0.5.9
 
 **Note**: rux may not be stable before v1.0 release.
 
@@ -97,20 +97,17 @@ rux serve
 
 When you save your writings, rux can detect the changes and start rebuilding.
 
-To run rux's server and rebuilder in the background:
+To run rux's server and rebuilder in the background(so we can write blog with at most one shell session.):
 
 ```bash
 rux start
 ```
-
-We can write blog with at most one shell session.
 
 To generate all posts to pdf:
 
 ```bash
 rux pdf
 ```
-
 
 Themes
 ------
