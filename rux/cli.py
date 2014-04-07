@@ -15,7 +15,7 @@ from os.path import dirname, exists
 
 from . import __version__
 from . import src_ext
-from .daemon import rux_daemon
+from .daemon import daemon
 from .exceptions import SourceDirectoryNotFound
 from .generator import generator
 from .pdf import pdf_generator
@@ -30,8 +30,9 @@ from docopt import docopt
 usage = """Usage:
   rux [-h|-v]
   rux post
-  rux (deploy|build|clean|serve)
-  rux (start|stop|status|restart)
+  rux (deploy|build|clean)
+  rux (serve|start) [<port>]
+  rux (stop|status)
   rux pdf
 
 Options:
@@ -57,7 +58,9 @@ def deploy_blog():
     """Deploy new blog to current directory"""
     logger.info(deploy_blog.__doc__)
     # `rsync -aqu path/to/res/* .`
-    call('rsync -aqu ' + join(dirname(__file__), 'res', '*') + ' .', shell=True)
+    call(
+        'rsync -aqu ' + join(dirname(__file__), 'res', '*') + ' .',
+        shell=True)
     logger.success('Done')
     logger.info('Please edit config.toml to meet your needs')
 
@@ -98,6 +101,15 @@ def main():
     arguments = docopt(usage, version=__version__)
     logger.setLevel(logging.INFO)  # !important
 
+    # valiad port argument
+    port = arguments['<port>'] or '8888'
+
+    if (not port.isdigit()) or (not 0 < int(port) < 65535):
+        logger.error('Port must be an integer in 0-65535.')
+        sys.exit(1)
+    else:
+        port = int(port)
+
     if arguments['post']:
         new_post()
     elif arguments['deploy']:
@@ -105,17 +117,15 @@ def main():
     elif arguments['build']:
         generator.generate()
     elif arguments["serve"]:
-        server.run()
+        server.run(port)
     elif arguments['clean']:
         clean()
     elif arguments['start']:
-        rux_daemon.start()
+        daemon.start(port)
     elif arguments['stop']:
-        rux_daemon.stop()
+        daemon.stop()
     elif arguments['status']:
-        rux_daemon.status()
-    elif arguments['restart']:
-        rux_daemon.restart()
+        daemon.status()
     elif arguments['pdf']:
         pdf_generator.generate()
     else:

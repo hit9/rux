@@ -1,3 +1,9 @@
+v0.5.9
+------
+
+- Remove command `rux restart`
+- Add optional `<port>` to command: `rux start`, `rux serve`
+
 v0.5.8
 ------
 
