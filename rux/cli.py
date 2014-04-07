@@ -101,8 +101,6 @@ def main():
     arguments = docopt(usage, version=__version__)
     logger.setLevel(logging.INFO)  # !important
 
-    print arguments
-
     # valiad port argument
     port = arguments['<port>'] or '8888'
 
