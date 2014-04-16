@@ -10,7 +10,7 @@ Micro & Fast static blog generator (markdown => html).
 
 .. image:: screen-shots/rux-in-shell.png
 
-Latest version v\ |version|. (:ref:`Installation <install>`)
+Latest version v\ |version|. (:ref:`Installation <install>`)  Alpha
 
 
 Features

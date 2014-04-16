@@ -3,12 +3,9 @@ Rux
 
 Micro & Fast static blog generator (markdown => html).
 
-latest version: v0.5.9
-
-**Note**: rux may not be stable before v1.0 release.
+latest version: v0.6.0-Alpha
 
 ![](docs/screen-shots/rux-in-shell.png)
-
 
 Features
 --------
@@ -38,6 +35,8 @@ Installing pip...............done.
 $ . venv/bin/activate
 $ pip install rux
 ```
+
+Install troubles: https://github.com/hit9/rux#common-issues
 
 Demo
 ----

@@ -66,5 +66,13 @@ setup(
         'https://github.com/hit9/toml.py/zipball/master#egg=toml.py-0.1.2',
     ],
     ext_modules=[Extension('ruxlibparser', ['src/libparser.c'])],
-    long_description=__doc__
+    long_description=__doc__,
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Intended Audience :: Customer Service',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: POSIX',
+        'Programming Language :: Python',
+    ]
 )

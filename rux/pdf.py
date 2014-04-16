@@ -37,8 +37,7 @@ def render(template, **data):
 class PDFGenerator(object):
 
     def __init__(self):
-        self.commands = ['wkhtmltopdf',
-                         '-',]
+        self.commands = ['wkhtmltopdf', '-', 'out.pdf']
         self.config = config.default
         self.blog = blog
         self.author = author
@@ -60,7 +59,7 @@ class PDFGenerator(object):
         self.author.__dict__.update(self.config['author'])
 
         # initialize jinja2
-        templates = join(self.blog.theme, 'templates')  # templates directory path
+        templates = join(self.blog.theme, 'templates')
         # set a renderer
         jinja2_global_data = {
             'blog': self.blog,
@@ -88,7 +87,8 @@ class PDFGenerator(object):
                 self.posts.append(Post(**data))
 
         # sort posts by its created time, from new to old
-        self.posts.sort(key=lambda post: post.datetime.timetuple(), reverse=True)
+        self.posts.sort(key=lambda post: post.datetime.timetuple(),
+                        reverse=True)
 
     def parse_posts(self):
 
@@ -106,7 +106,8 @@ class PDFGenerator(object):
         logger.success('Posts parsed')
 
     def render(self):
-        self.html = render('pdf.html', posts=self.posts, BLOG_ABS_PATH=os.getcwd())
+        self.html = render('pdf.html', posts=self.posts,
+                           BLOG_ABS_PATH=os.getcwd())
         logger.success('Posts rendered')
 
     def generate(self):
@@ -116,14 +117,18 @@ class PDFGenerator(object):
         self.parse_posts()
         self.render()
 
-        out = self.blog.name.encode(charset) + '.pdf'
-
         logger.info('Generate pdf with wkhtmltopdf:')
-        self.commands.append(out)   # append output path
-        proc = subprocess.Popen(self.commands, stdin=subprocess.PIPE,
-                                stdout=sys.stdout, stderr=sys.stderr)
+
+        try:
+            proc = subprocess.Popen(self.commands, stdin=subprocess.PIPE,
+                                    stdout=sys.stdout, stderr=sys.stderr)
+        except OSError:  # wkhtmltopdf not found
+            logger.error('Try to install wkhtmltopdf first %s' %
+                         'http://rux.readthedocs.org/en/latest/pdf.html')
+            sys.exit(1)
         stdout, stderr = proc.communicate(input=self.html.encode(charset))
-        logger.success('Generated to %s in %.3f seconds' % (out, time.time() - start_time))
+        logger.success('Generated to %s in %.3f seconds' %
+                       (out, time.time() - start_time))
 
 
 pdf_generator = PDFGenerator()
