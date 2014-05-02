@@ -1,5 +1,5 @@
-Rux
-===
+Rux(https://raw.githubusercontent.com/hit9/artworks/master/png/Rux.png)
+=======================================================================
 
 Micro & Fast static blog generator (markdown => html).
 
