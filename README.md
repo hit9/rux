@@ -1,11 +1,9 @@
-Rux(https://raw.githubusercontent.com/hit9/artworks/master/png/Rux.png)
+![Rux](https://raw.githubusercontent.com/hit9/artworks/master/png/Rux.png)
 =======================================================================
 
 Micro & Fast static blog generator (markdown => html).
 
 latest version: v0.6.1-Alpha
-
-![](docs/screen-shots/rux-in-shell.png)
 
 Features
 --------
