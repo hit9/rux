@@ -127,8 +127,8 @@ class PDFGenerator(object):
                          'http://rux.readthedocs.org/en/latest/pdf.html')
             sys.exit(1)
         stdout, stderr = proc.communicate(input=self.html.encode(charset))
-        logger.success('Generated to %s in %.3f seconds' %
-                       (out, time.time() - start_time))
+        logger.success('Generated to out.pdf in %.3f seconds' %
+                       (time.time() - start_time))
 
 
 pdf_generator = PDFGenerator()

@@ -17,7 +17,7 @@
     :license: BSD
 """
 
-__version__ = '0.6.0'
+__version__ = '0.6.1'
 
 charset = 'utf8'  # utf8 input & output
 src_ext = '.md'

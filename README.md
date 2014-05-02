@@ -3,7 +3,7 @@ Rux
 
 Micro & Fast static blog generator (markdown => html).
 
-latest version: v0.6.0-Alpha
+latest version: v0.6.1-Alpha
 
 ![](docs/screen-shots/rux-in-shell.png)
 
