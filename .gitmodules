@@ -4,3 +4,6 @@
 [submodule "docs/_themes/rux"]
 	path = docs/_themes/rux
 	url = https://github.com/hit9/sphinx-theme-rux
+[submodule "docs/_themes/plain"]
+	path = docs/_themes/plain
+	url = git://github.com/hit9/sphinx-theme-plain.git
