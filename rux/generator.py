@@ -47,10 +47,11 @@ class Generator(object):
         self.blog = blog
         self.posts = []
         self.pages = []
+        self.root = ''
 
         gc.collect()
 
-    def initialize(self):
+    def initialize(self, local=False):
         """Initialize configuration and renderer environment"""
 
         # read configuration
@@ -64,6 +65,10 @@ class Generator(object):
         update_nested_dict(self.config, conf)
         self.blog.__dict__.update(self.config['blog'])
         self.author.__dict__.update(self.config['author'])
+        self.root = self.config['root']
+
+        if local:
+            self.root = ''
 
         # initialize jinja2
         templates = join(self.blog.theme, 'templates')  # templates directory path
@@ -71,7 +76,8 @@ class Generator(object):
         jinja2_global_data = {
             'blog': self.blog,
             'author': self.author,
-            'config': self.config
+            'config': self.config,
+            'root': self.root
         }
         renderer.initialize(templates, jinja2_global_data)
         logger.success('Initialized')
@@ -149,9 +155,9 @@ class Generator(object):
                 render_to(post.out, Post.template, post=post)
             render_to(page.out, Page.template, page=page)
 
-    def generate(self):
+    def generate(self, local=False):
         start_time = time.time()
-        self.initialize()
+        self.initialize(local)
         self.get_posts()
         self.get_pages()
         self.parse_posts()
@@ -159,9 +165,9 @@ class Generator(object):
 
         logger.success("Build done in %.3f seconds" % (time.time() - start_time))
 
-    def re_generate(self):
+    def re_generate(self, local=False):
         self.reset()
-        self.generate()
+        self.generate(local)
 
 
 generator = Generator()

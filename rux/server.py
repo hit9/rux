@@ -110,7 +110,7 @@ class Server(object):
                     logger.info("Changes detected, start rebuilding..")
 
                     try:
-                        generator.re_generate()
+                        generator.re_generate(local=True)
                     except SystemExit:  # catch sys.exit, it means fatal error
                         logger.error("Error occurred, server shut down")
                         self.shutdown_server()

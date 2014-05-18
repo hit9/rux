@@ -43,6 +43,8 @@ Configuration
 
 Configuration in ``config.toml`` is simple and obvious::
 
+    root = ""
+
     [blog]
     name = "Sunshine Every Day"
     description = "Never give up, my determination is to chase for success"
