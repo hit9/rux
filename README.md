@@ -122,7 +122,9 @@ But it's 100% ok to use themes not in the submodule way.
 
 Theme list:
 
-- default: https://github.com/hit9/rux-theme-default.git by @hit9
+- default: https://github.com/hit9/rux-theme-default by @hit9
+
+- clr: https://github.com/hit9/rux-theme-clr by @hit9
 
 Documentation
 -------------

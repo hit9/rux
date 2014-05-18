@@ -35,3 +35,4 @@ Available Themes
 ----------------
 
 - default https://github.com/hit9/rux-theme-default.git
+- clr https://github.com/hit9/rux-theme-clr
