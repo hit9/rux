@@ -1,3 +1,5 @@
+root = ""  # the path your blog will be served, i.e. "myblog.com/blog" => `root="/blog"`
+
 [blog]
 name = "Sunshine Every Day"
 description = "Never give up, my determination is to chase for success"
