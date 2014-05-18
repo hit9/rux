@@ -23,6 +23,7 @@ class Config(object):
 
     # default configuration
     default = {
+        'root': '',
         'blog': {
             'name': '',
             'description': '',

@@ -115,7 +115,7 @@ def main():
     elif arguments['deploy']:
         deploy_blog()
     elif arguments['build']:
-        generator.generate()
+        generator.generate(local=False)
     elif arguments["serve"]:
         server.run(port)
     elif arguments['clean']:
