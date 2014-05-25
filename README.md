@@ -39,13 +39,9 @@ Install troubles: https://github.com/hit9/rux#common-issues
 Demo
 ----
 
-- Site: http://love.hit9.org
-- Code: https://github.com/hit9/v.git
+- [love.hit9.org](http://love.hit9.org), [source](https://github.com/hit9/v.git)
 
----
-
-- Site: http://hit9.org
-- Code: https://github.com/hit9/hit9.github.io
+- [hit9.org](http://hit9.org), [source](https://github.com/hit9/hit9.github.io)
 
 
 Sample Post
