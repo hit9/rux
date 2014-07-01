@@ -6,4 +6,5 @@ recursive-exclude venv *
 recursive-exclude dist *
 recursive-exclude build *
 recursive-exclude rux.egg-info *
+recursive-exclude rux/res/clr/.sass-cache *
 recursive-exclude rux/res/default/.sass-cache *

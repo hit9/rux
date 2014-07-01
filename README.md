@@ -3,7 +3,7 @@
 
 Micro & Fast static blog generator (markdown => html).
 
-latest version: v0.6.2-Alpha
+latest version: v0.6.3-Alpha
 
 Features
 --------
@@ -143,16 +143,7 @@ Common Issues
   sudo apt-get install python-dev
   ```
 
-2. How to generate PDF from my blog? You need to install `wkhtmltopdf` first:
-
-  ```
-  # Ubuntu
-  sudo apt-get install wkhtmltopdf
-
-  # on OSX
-  brew tap homebrew/boneyard
-  brew install wkhtmltopdf
-  ```
+2. How to generate PDF from my blog? You need to install [wkhtmltopdf](http://wkhtmltopdf.org/downloads.html) first:
 
 License
 -------

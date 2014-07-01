@@ -10,3 +10,5 @@ rux.egg*
 dist
 docs/_build
 *.so
+reinstall.sh
+.DS_Store
