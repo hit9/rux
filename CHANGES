@@ -1,3 +1,8 @@
+v0.6.3
+------
+
+- use `clr` instead of `default` as default theme
+
 v0.6.2
 ------
 
