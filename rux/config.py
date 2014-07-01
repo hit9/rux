@@ -27,7 +27,7 @@ class Config(object):
         'blog': {
             'name': '',
             'description': '',
-            'theme': 'default',
+            'theme': 'clr',
         },
         'author': {
             'name': 'hit9',
