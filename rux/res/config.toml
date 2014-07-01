@@ -14,3 +14,10 @@ url = "http://hit9.org"  # author's index url
 [disqus]
 enable = true  # enable comment? true or false
 shortname = "rux"  # shortname from disqus.com
+
+[theme]
+email_public = false
+github = "hit9"
+twitter = "nz2324"
+dribbble = ""
+pdf_link = "/out.pdf"
