@@ -79,7 +79,7 @@ QuickStart
    rux post
    ```
 
-5. Perview site in browser, default url: `0.0.0.0:8888`.
+5. Preview site in browser, default url: `0.0.0.0:8888`.
 
 Sample Post
 ------------
