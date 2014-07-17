@@ -3,7 +3,7 @@
 
 Micro & Fast static blog generator (markdown => html).
 
-latest version: v0.6.3-Alpha
+latest version: v0.6.5-Beta
 
 Features
 --------
@@ -123,12 +123,6 @@ But it's 100% ok to use themes not in the submodule way.
 Theme list:
 
 - default: https://github.com/hit9/rux-theme-default.git by @hit9
-
-Documentation
--------------
-
-http://rux.readthedocs.org/
-
 
 Common Issues
 --------------
