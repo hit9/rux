@@ -37,12 +37,11 @@ Links
 """
 
 from setuptools import setup, Extension
-from rux import __version__
 
 
 setup(
     name='rux',
-    version=__version__,
+    version='0.6.5',
     author='hit9',
     author_email='nz2324@126.com',
     description='''Micro & Fast static blog generator based on markdown''',
