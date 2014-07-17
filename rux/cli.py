@@ -49,9 +49,7 @@ Commands:
   stop              stop http server and rebuilder daemon
   status            report the daemon's status
   restart           restart the daemon
-  pdf               generate all posts to PDF
-
-Go to http://rux.readthedocs.org/ for more help."""
+  pdf               generate all posts to PDF"""
 
 
 def deploy_blog():
