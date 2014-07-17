@@ -4,7 +4,7 @@
 Rux
 ---
 
-Micro & Fast static blog generator (markdown => html).
+Micro & Fast static blog generator (markdown => html). 4 - Beta
 
 Features
 ````````
@@ -33,11 +33,7 @@ Installation
 Links
 `````
 
-* Documentation <http://rux.readthedocs.org>
-* Code on GitHub <https://github.com/hit9/rux>
-
-**NOTICE**: Rux may not be stable before version 1.0
-
+* GitHub <https://github.com/hit9/rux>
 """
 
 from setuptools import setup, Extension
@@ -49,9 +45,9 @@ setup(
     version=__version__,
     author='hit9',
     author_email='nz2324@126.com',
-    description='''Micro and fast static blog generator designed only for writing''',
+    description='''Micro & Fast static blog generator based on markdown''',
     license='BSD',
-    keywords='static blog generator, markdown, html',
+    keywords='static blog generator markdown, html',
     url='http://github.com/hit9/rux',
     packages=['rux'],
     include_package_data=True,
@@ -68,7 +64,7 @@ setup(
     ext_modules=[Extension('ruxlibparser', ['src/libparser.c'])],
     long_description=__doc__,
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Customer Service',
         'License :: OSI Approved :: BSD License',
