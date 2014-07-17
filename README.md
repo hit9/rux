@@ -3,7 +3,7 @@
 
 Micro & Fast static blog generator (markdown => html).
 
-latest version: v0.6.3-Alpha
+latest version: v0.6.5-Beta
 
 Features
 --------
@@ -43,6 +43,45 @@ Demo
 
 - [hit9.org](http://hit9.org), [source](https://github.com/hit9/hit9.github.io)
 
+
+QuickStart
+-----------
+
+1. Create a new directory and install rux:
+
+   ```bash
+   mkdir myblog && cd myblog
+   virtualenv venv
+   . venv/bin/activate
+   pip install rux
+   ```
+
+   Deploy blog inside it:
+
+   ```bash
+   mkdir blog && cd blog
+   rux deploy
+   ```
+
+2. Edit generated configuration:
+
+   ```bash
+   vi config.toml
+   ```
+
+3. Start rux daemon:
+
+   ```bash
+   rux start
+   ```
+
+4. New a post:
+
+   ```bash
+   rux post
+   ```
+
+5. Preview site in browser, default url: `0.0.0.0:8888`.
 
 Sample Post
 ------------
@@ -127,12 +166,6 @@ Theme list:
 - default: https://github.com/hit9/rux-theme-default by @hit9
 
 - clr: https://github.com/hit9/rux-theme-clr by @hit9
-
-Documentation
--------------
-
-http://rux.readthedocs.org/
-
 
 Common Issues
 --------------
