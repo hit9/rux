@@ -42,6 +42,45 @@ Demo
 - Site: http://love.hit9.org
 - Code: https://github.com/hit9/v.git
 
+QuickStart
+-----------
+
+1. Create a new directory and install rux:
+
+   ```bash
+   mkdir myblog && cd myblog
+   virtualenv venv
+   . venv/bin/activate
+   pip install rux
+   ```
+
+   Deploy blog inside it:
+
+   ```bash
+   mkdir blog && cd blog
+   rux deploy
+   ```
+
+2. Edit generated configuration:
+
+   ```bash
+   vi config.toml
+   ```
+
+3. Start rux daemon:
+
+   ```bash
+   rux start
+   ```
+
+4. New a post:
+
+   ```bash
+   rux post
+   ```
+
+5. Perview site in browser, default url: `0.0.0.0:8888`.
+
 Sample Post
 ------------
 
