@@ -39,9 +39,7 @@ Install troubles: https://github.com/hit9/rux#common-issues
 Demo
 ----
 
-- [love.hit9.org](http://love.hit9.org), [source](https://github.com/hit9/v.git)
-
-- [hit9.org](http://hit9.org), [source](https://github.com/hit9/hit9.github.io)
+- http://hit9.github.io  (https://github.com/hit9/hit9.github.io.git)
 
 
 QuickStart
