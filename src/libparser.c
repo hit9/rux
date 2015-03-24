@@ -75,7 +75,7 @@ parse(post_t *t, char *src)
     // find the last non-space char in this line
     for (y=q-1; y > x && (*y == ' ' || *y == '\t'); y--);
 
-    t->tsz = y-x+1;
+    t->tsz = (int)(y - x + 1);
 
     /*
      * find title picture
@@ -94,6 +94,6 @@ parse(post_t *t, char *src)
     // find the last non-space char in this line
     for (y=q-1; y > x && (*y == ' ' || *y == '\t'); y--);
 
-    t->tpsz = y-x+1;
+    t->tpsz = (int)(y - x + 1);
     return 0;
 }
