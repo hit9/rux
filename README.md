@@ -3,7 +3,7 @@
 
 Micro & Fast static blog generator (markdown => html).
 
-latest version: v0.6.5-Beta
+latest version: v0.6.6-Beta
 
 Features
 --------
