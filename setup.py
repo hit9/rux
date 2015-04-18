@@ -41,7 +41,7 @@ from setuptools import setup, Extension
 
 setup(
     name='rux',
-    version='0.6.5',
+    version='0.6.6',
     author='hit9',
     author_email='nz2324@126.com',
     description='''Micro & Fast static blog generator based on markdown''',

@@ -13,8 +13,9 @@ from BaseHTTPServer import BaseHTTPRequestHandler
 from BaseHTTPServer import HTTPServer
 import logging
 from os import listdir as ls
-from os import stat
-from os.path import exists
+from os import stat, getcwd
+from os.path import exists, relpath
+import posixpath
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 import socket
 from SocketServer import ThreadingMixIn
@@ -30,12 +31,21 @@ from .logger import logger
 from .models import Post
 from .utils import join
 
+_root = ''
 
 class Handler(SimpleHTTPRequestHandler):
 
     def log_message(self, format, *args):
         # http server's output message formatter
         logger.info("%s - %s" % (self.address_string(), format % args))
+
+    def translate_path(self, path):
+        if not path.startswith(_root):
+            path = _root
+        path_ = join(getcwd(), relpath(path, _root or '/'))
+        path_ = path_.split('?')[0]
+        path_ = path_.split('#')[0]
+        return posixpath.normpath(path_)
 
 
 class MultiThreadedHTTPServer(ThreadingMixIn, HTTPServer):
@@ -110,7 +120,9 @@ class Server(object):
                     logger.info("Changes detected, start rebuilding..")
 
                     try:
-                        generator.re_generate(local=True)
+                        generator.re_generate()
+                        global _root
+                        _root = generator.root
                     except SystemExit:  # catch sys.exit, it means fatal error
                         logger.error("Error occurred, server shut down")
                         self.shutdown_server()
