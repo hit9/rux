@@ -1,4 +1,5 @@
-root = ""  # the path your blog will be served, i.e. "myblog.com/blog" => `root="/blog"`
+# the root path your site will be served. e.g. "/mysite", (default: "", no sub_path)
+root = ""
 
 [blog]
 name = "Sunshine Every Day"
