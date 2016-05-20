@@ -107,7 +107,7 @@ class PDFGenerator(object):
 
     def render(self):
         self.html = render('pdf.html', posts=self.posts,
-                           BLOG_ABS_PATH=os.getcwd())
+                           BLOG_ABS_PATH=unicode(os.getcwd(), "utf8"))
         logger.success('Posts rendered')
 
     def generate(self):
