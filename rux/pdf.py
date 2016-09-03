@@ -90,12 +90,18 @@ class PDFGenerator(object):
         self.posts.sort(key=lambda post: post.datetime.timetuple(),
                         reverse=True)
 
+    def replace_relative_url_to_absolute(self, content):
+        """Replace '../' leaded url with absolute uri.
+        """
+        p =  os.path.join(os.getcwd(), './src', '../')
+        return content.replace('../', p)
+
     def parse_posts(self):
 
         for post in self.posts:
             with open(post.filepath, 'r') as file:
                 content = file.read()
-
+            content= self.replace_relative_url_to_absolute(content)
             try:
                 data = parser.parse(content)
             except ParseException, e:
