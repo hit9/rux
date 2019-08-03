@@ -1,0 +1,16 @@
+# Configuration for black.
+
+[tool.black]
+py36 = true
+line-length = 88
+skip-numeric-underscore-normalization = true
+exclude = '''
+/(
+      \.git
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | dist
+    | build
+)
+'''

@@ -1,0 +1,15 @@
+# Example configurations.
+
+site:
+  name: My blog
+  description: Sunshine everyday.
+  theme: path/to/theme/directory
+
+author:
+  name: hit9
+  email: hit9@icloud.com
+  description: A programmer.
+
+disqus:
+  enable: yes
+  shortname: disqus-shortname
